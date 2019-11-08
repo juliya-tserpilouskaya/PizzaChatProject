@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Media;
 
 namespace PizzaChat
 {
@@ -15,10 +16,11 @@ namespace PizzaChat
         string DialogBox { get; }
         string MsgBox { get; set; }
         //void SendMsg(string Msg);
-        event EventHandler SendMsg;
+        //event EventHandler SendMsg;
     }
     public partial class MainForm : Form, IMainForm
     {
+        public string[] ArrMsg;
 
         public MainForm()
         {
@@ -28,8 +30,6 @@ namespace PizzaChat
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            fldDialogBox.Text += fldMsgBox.Text;
-            fldMsgBox.Text = String.Empty;
 
         }
 
@@ -37,10 +37,11 @@ namespace PizzaChat
         {
             if (fldMsgBox.Text.Length > 0)
             {
-                fldDialogBox.Text = fldDialogBox.Text + "\n" + fldMsgBox.Text;
+                fldDialogBox.SelectionFont = new Font(fldDialogBox.Font.FontFamily, this.Font.Size, FontStyle.Italic); // жирный
+                fldDialogBox.AppendText( fldMsgBox.Text + "\n\n");
+                fldDialogBox.SelectionFont = new Font(fldDialogBox.Font.FontFamily, this.Font.Size, FontStyle.Regular); // обычный
                 fldMsgBox.Text = String.Empty;
             }
-            //this.txtBlock.Background = new SolidColorBrush(Colors.LightGray);
         }
 
         public string DialogBox
