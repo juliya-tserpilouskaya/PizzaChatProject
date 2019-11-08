@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29306.81
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaChat", "PizzaChat\PizzaChat.csproj", "{561A0753-3D76-47EB-980D-3119113ADD33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassLibrary", "ClassLibrary\ClassLibrary.csproj", "{0FE62BDF-5B06-45B0-B2C0-78F29722CFB7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{561A0753-3D76-47EB-980D-3119113ADD33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{561A0753-3D76-47EB-980D-3119113ADD33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{561A0753-3D76-47EB-980D-3119113ADD33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{561A0753-3D76-47EB-980D-3119113ADD33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FE62BDF-5B06-45B0-B2C0-78F29722CFB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FE62BDF-5B06-45B0-B2C0-78F29722CFB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FE62BDF-5B06-45B0-B2C0-78F29722CFB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FE62BDF-5B06-45B0-B2C0-78F29722CFB7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6CA4B830-F372-4044-A820-9C9E1DC0D5C0}
+	EndGlobalSection
+EndGlobal
