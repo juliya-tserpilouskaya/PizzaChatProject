@@ -74,6 +74,7 @@
             this.fldMsgBox.Size = new System.Drawing.Size(175, 22);
             this.fldMsgBox.TabIndex = 2;
             this.fldMsgBox.Text = "";
+            this.fldMsgBox.TextChanged += new System.EventHandler(this.FldMsgBox_TextChanged);
             // 
             // MainForm
             // 

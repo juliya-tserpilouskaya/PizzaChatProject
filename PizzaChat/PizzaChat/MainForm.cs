@@ -1,4 +1,11 @@
-﻿using System;
+﻿using System.Net;
+using System.IO;
+using System.Threading.Tasks;
+using System.Net.Mail;
+
+
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -25,6 +32,7 @@ namespace PizzaChat
         public MainForm()
         {
             InitializeComponent();
+            //fldDialogBox.AppendText("HelloWord");
             btSendMsg.Click += new EventHandler(btSendMsg_Click);
         }
 
@@ -37,7 +45,7 @@ namespace PizzaChat
         {
             if (fldMsgBox.Text.Length > 0)
             {
-                fldDialogBox.SelectionFont = new Font(fldDialogBox.Font.FontFamily, this.Font.Size, FontStyle.Italic); // жирный
+                fldDialogBox.SelectionFont = new Font(fldDialogBox.Font.FontFamily, this.Font.Size, FontStyle.Italic); // курсивчик
                 fldDialogBox.AppendText( fldMsgBox.Text + "\n\n");
                 fldDialogBox.SelectionFont = new Font(fldDialogBox.Font.FontFamily, this.Font.Size, FontStyle.Regular); // обычный
                 fldMsgBox.Text = String.Empty;
@@ -56,5 +64,10 @@ namespace PizzaChat
 
 
         public event EventHandler SendMsg;
+
+        private void FldMsgBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
