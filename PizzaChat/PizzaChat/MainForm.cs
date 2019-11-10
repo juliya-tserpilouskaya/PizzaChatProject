@@ -2,9 +2,6 @@
 using System.IO;
 using System.Threading.Tasks;
 using System.Net.Mail;
-
-
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,7 +9,6 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media;
 
@@ -27,21 +23,26 @@ namespace PizzaChat
     }
     public partial class MainForm : Form, IMainForm
     {
-        public string[] ArrMsg;
+        //public string[] ArrMsg;
 
         public MainForm()
         {
             InitializeComponent();
-            //fldDialogBox.AppendText("HelloWord");
+            fldDialogBox.AppendText("HelloWord");
             btSendMsg.Click += new EventHandler(btSendMsg_Click);
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
+        public void MainForm_Load(object sender, EventArgs e)
         {
 
         }
 
-        void btSendMsg_Click(object sender, EventArgs e)
+        public void SendSystemMsg(string msg)
+        {
+            fldDialogBox.AppendText(msg + "\n\n");
+        }
+
+        public void btSendMsg_Click(object sender, EventArgs e)
         {
             if (fldMsgBox.Text.Length > 0)
             {

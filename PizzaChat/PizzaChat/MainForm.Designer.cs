@@ -94,10 +94,9 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btSendMsg;
-        private System.Windows.Forms.RichTextBox fldDialogBox;
-        private System.Windows.Forms.RichTextBox fldMsgBox;
+        public System.Windows.Forms.RichTextBox fldDialogBox;
+        public System.Windows.Forms.Button btSendMsg;
+        public System.Windows.Forms.RichTextBox fldMsgBox;
     }
 }
 

@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace ClassLibrary
 {
-    class Class1
+    public class Dialog
     {
+        public void MainDialog()
+        {
+
+        }
     }
 }
