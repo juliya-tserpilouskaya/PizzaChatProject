@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8BA3A9C8-66BA-4577-A95F-3C1D8BBD6129}</ProjectGuid>
+    <ProjectGuid>{FA6E71F5-29EB-4BDD-B77E-92532A67C9A9}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>Logger</RootNamespace>
     <AssemblyName>Logger</AssemblyName>
@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Logger.cs" />
+    <Compile Include="CustomLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
