@@ -26,10 +26,15 @@ namespace PizzaChat
         string name;
         public string DialogStatus=Constants.DialogStatus01;
 
+        Dictionary<byte, Person> People = new Dictionary<byte, Person>();
+        Dictionary<byte, ClassLibrary.Menu> MenuPizza = new Dictionary<byte, ClassLibrary.Menu>();
+
         public MainForm()
         {
             InitializeComponent();
+            Constants.CreateDictionary(People, MenuPizza);
             fldDialogBox.AppendText(Constants.DilogMsg01);
+
             btSendMsg.Click += new EventHandler(btSendMsg_Click);
         }
 
@@ -47,29 +52,48 @@ namespace PizzaChat
         {
             if (fldMsgBox.Text.Length > 0)
             {
-                fldDialogBox.SelectionFont = new Font(fldDialogBox.Font.FontFamily, this.Font.Size, FontStyle.Italic); // курсивчик
+                fldDialogBox.SelectionFont = new Font(fldDialogBox.Font.FontFamily, this.Font.Size, FontStyle.Italic);
                 fldDialogBox.AppendText("\n\n" + fldMsgBox.Text);
-                fldDialogBox.SelectionFont = new Font(fldDialogBox.Font.FontFamily, this.Font.Size, FontStyle.Regular); // обычный
-                //fldMsgBox.Text = String.Empty;
+                fldDialogBox.SelectionFont = new Font(fldDialogBox.Font.FontFamily, this.Font.Size, FontStyle.Regular);
             }
+
+
             switch (DialogStatus)
             {
                 case Constants.DialogStatus01:
                     name = fldMsgBox.Text;
+                                       
+                    SendSystemMsg(Constants.DilogMsg02);
+                    ShowMenu();
+
                     if (name == Constants.AdminName)
                     {
                         DialogStatus = Constants.DialogStatusAdmin01;
+                        SendSystemMsg(Constants.DilogMsg04);
                     }
                     else
                     {
                         DialogStatus = Constants.DialogStatus02;
-                        SendSystemMsg(Constants.DilogMsg02);
+                        // введите че выбрали
                     }
+
+                    fldMsgBox.Text = String.Empty;
                     break;
                 default: break;
             }
         }
 
+        public void ShowMenu()
+        {
+            string stringMenu = ClassLibrary.Menu.GetMenu(MenuPizza);
+            string[] arrMenu = stringMenu.Split(new char[] { '|' });
+
+            for (int i = 0; i < arrMenu.Length; i++)
+            {
+                arrMenu[i] = arrMenu[i].Replace(";", "\n");
+                SendSystemMsg(arrMenu[i]);
+            }
+        }
         public string DialogBox
         {
             get { return fldDialogBox.Text; }

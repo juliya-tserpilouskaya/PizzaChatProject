@@ -19,12 +19,13 @@ namespace ClassLibrary
             _cost = cost;
         }
 
-        public static string GetMotorcycles(Dictionary<byte, ClassLibrary.Menu> MenuPizza)
+        public static string GetMenu(Dictionary<byte, ClassLibrary.Menu> MenuPizza)
         {
             string menu = String.Empty;
             foreach (KeyValuePair<byte, Menu> keyValue in MenuPizza)
             {
-                menu +="|" + $"id: {keyValue.Key}, название:{keyValue.Value._name}, состав:{keyValue.Value._structure}, цена: {keyValue.Value._cost}.";
+                if (menu != String.Empty) menu += "|";
+                menu += $"№:{keyValue.Key};название:{keyValue.Value._name};состав:{keyValue.Value._structure};цена: {keyValue.Value._cost}";
             }
 
             return menu;

@@ -58,9 +58,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.fldDialogBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.fldDialogBox.Enabled = false;
+            this.fldDialogBox.HideSelection = false;
             this.fldDialogBox.Location = new System.Drawing.Point(12, 14);
             this.fldDialogBox.Name = "fldDialogBox";
+            this.fldDialogBox.ReadOnly = true;
             this.fldDialogBox.Size = new System.Drawing.Size(256, 398);
             this.fldDialogBox.TabIndex = 1;
             this.fldDialogBox.Text = "";
