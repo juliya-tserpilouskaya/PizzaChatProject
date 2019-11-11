@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logger", "Logger", "{EB0414
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger", "Logger\Logger.csproj", "{8BA3A9C8-66BA-4577-A95F-3C1D8BBD6129}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsoleApp", "TestConsoleApp\TestConsoleApp.csproj", "{270F5913-E9D6-40DE-B867-F1FB2AF77AD4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,12 +31,17 @@ Global
 		{8BA3A9C8-66BA-4577-A95F-3C1D8BBD6129}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BA3A9C8-66BA-4577-A95F-3C1D8BBD6129}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BA3A9C8-66BA-4577-A95F-3C1D8BBD6129}.Release|Any CPU.Build.0 = Release|Any CPU
+		{270F5913-E9D6-40DE-B867-F1FB2AF77AD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{270F5913-E9D6-40DE-B867-F1FB2AF77AD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{270F5913-E9D6-40DE-B867-F1FB2AF77AD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{270F5913-E9D6-40DE-B867-F1FB2AF77AD4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{8BA3A9C8-66BA-4577-A95F-3C1D8BBD6129} = {EB041420-5984-4C3B-8238-10FE20C141DD}
+		{270F5913-E9D6-40DE-B867-F1FB2AF77AD4} = {EB041420-5984-4C3B-8238-10FE20C141DD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6CA4B830-F372-4044-A820-9C9E1DC0D5C0}

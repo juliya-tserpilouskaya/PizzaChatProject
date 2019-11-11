@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,12 +11,15 @@ namespace Logger
     {
         void INFOLog(string message);
         void ERRORLog(string message);
-        void WARNLog(string message);
-        void PersonsLog(OurPerson[] persons);
-        
+        void WARNLog(string message);        
     }
     public class Logger : ILogger
     {
+        static void Main()
+        {
+            
+        }
+        
         public Logger()
         {
 
@@ -35,17 +39,5 @@ namespace Logger
             //TODO: запись в файл сделать
             Console.WriteLine(message);
         }
-        public void PersonsLog(OurPerson[] persons)
-        {
-            throw new NotImplementedException();
-            //Concept in development
-        }
     }
-    #region Persons class example
-    public class OurPerson
-    {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-    }
-    #endregion
 }
