@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Media;
+using ClassLibrary;
 
 namespace PizzaChat
 {
@@ -18,17 +19,17 @@ namespace PizzaChat
     {
         string DialogBox { get; }
         string MsgBox { get; set; }
-        //void SendMsg(string Msg);
-        //event EventHandler SendMsg;
+
     }
     public partial class MainForm : Form, IMainForm
     {
-        //public string[] ArrMsg;
+        string name;
+        public string DialogStatus=Constants.DialogStatus01;
 
         public MainForm()
         {
             InitializeComponent();
-            fldDialogBox.AppendText("HelloWord");
+            fldDialogBox.AppendText(Constants.DilogMsg01);
             btSendMsg.Click += new EventHandler(btSendMsg_Click);
         }
 
@@ -39,7 +40,7 @@ namespace PizzaChat
 
         public void SendSystemMsg(string msg)
         {
-            fldDialogBox.AppendText(msg + "\n\n");
+            fldDialogBox.AppendText("\n\n" + msg);
         }
 
         public void btSendMsg_Click(object sender, EventArgs e)
@@ -47,9 +48,25 @@ namespace PizzaChat
             if (fldMsgBox.Text.Length > 0)
             {
                 fldDialogBox.SelectionFont = new Font(fldDialogBox.Font.FontFamily, this.Font.Size, FontStyle.Italic); // курсивчик
-                fldDialogBox.AppendText( fldMsgBox.Text + "\n\n");
+                fldDialogBox.AppendText("\n\n" + fldMsgBox.Text);
                 fldDialogBox.SelectionFont = new Font(fldDialogBox.Font.FontFamily, this.Font.Size, FontStyle.Regular); // обычный
-                fldMsgBox.Text = String.Empty;
+                //fldMsgBox.Text = String.Empty;
+            }
+            switch (DialogStatus)
+            {
+                case Constants.DialogStatus01:
+                    name = fldMsgBox.Text;
+                    if (name == Constants.AdminName)
+                    {
+                        DialogStatus = Constants.DialogStatusAdmin01;
+                    }
+                    else
+                    {
+                        DialogStatus = Constants.DialogStatus02;
+                        SendSystemMsg(Constants.DilogMsg02);
+                    }
+                    break;
+                default: break;
             }
         }
 
