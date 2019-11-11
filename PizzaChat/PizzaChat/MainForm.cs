@@ -76,11 +76,63 @@ namespace PizzaChat
                         DialogStatus = Constants.DialogStatus02;
                         // введите че выбрали
                     }
-
-                    fldMsgBox.Text = String.Empty;
+                    break;
+                case Constants.DialogStatusAdmin01:
+                    if (Convert.ToInt32(fldMsgBox.Text)>0 && Convert.ToInt32(fldMsgBox.Text) <= Constants.AmountAdminVariants)
+                    {
+                        switch (fldMsgBox.Text)
+                        {
+                            case "1":
+                                DialogStatus = Constants.DialogStatusAdmin02;
+                                SendSystemMsg(Constants.DilogMsg07);
+                                break;
+                            case "2":
+                                DialogStatus = Constants.DialogStatusAdmin03;
+                                SendSystemMsg(Constants.DilogMsg11);
+                                break;
+                            case "3":
+                                DialogStatus = Constants.DialogStatusAdmin04;
+                                SendSystemMsg(Constants.DilogMsg09);
+                                break;
+                            case "4":
+                                ShowMenu();
+                                SendSystemMsg(Constants.DilogMsg04);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        SendSystemMsg(Constants.DilogMsg05);
+                        //Ошибка вывода сообщения.
+                    }
+                    break;
+                case Constants.DialogStatusAdmin02:
+                    ClassLibrary.Menu.CreatePizza(MenuPizza, fldMsgBox.Text);
+                    SendSystemMsg(Constants.DilogMsg08);
+                    SendSystemMsg(Constants.DilogMsg04);
+                    DialogStatus = Constants.DialogStatusAdmin01;
+                    break;
+                case Constants.DialogStatusAdmin03:
+                    //Ошибка: проверить есть ли вообще такой номер в id библиотеки
+                    //Ошибка: введена не цифра для цены или id
+                    ClassLibrary.Menu.UpdateMenu(MenuPizza, fldMsgBox.Text);
+                    SendSystemMsg(Constants.DilogMsg12);
+                    SendSystemMsg(Constants.DilogMsg04);
+                    DialogStatus = Constants.DialogStatusAdmin01;
+                    break;
+                case Constants.DialogStatusAdmin04:
+                    //Ошибка: проверить есть ли вообще такой номер в id библиотеки
+                    //Ошибка: введена не цифра
+                    ClassLibrary.Menu.DeletePizza(MenuPizza, Convert.ToByte(fldMsgBox.Text));
+                    SendSystemMsg(Constants.DilogMsg10);
+                    SendSystemMsg(Constants.DilogMsg04);
+                    DialogStatus = Constants.DialogStatusAdmin01;
                     break;
                 default: break;
             }
+            fldMsgBox.Text = String.Empty;
         }
 
         public void ShowMenu()

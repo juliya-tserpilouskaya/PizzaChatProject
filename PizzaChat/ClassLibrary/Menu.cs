@@ -31,17 +31,18 @@ namespace ClassLibrary
             return menu;
         }
 
-        public static void CreatePizza(Dictionary<byte, ClassLibrary.Menu> MenuPizza, string name, string structure, int cost)
+        public static void CreatePizza(Dictionary<byte, ClassLibrary.Menu> MenuPizza, string pizzaInfo)
         {
+            string[] arrMenu = pizzaInfo.Split(new char[] { ';' });
             byte id = (byte)MenuPizza.Keys.Max();
             id++;
-
-            MenuPizza.Add(id, new Menu(name, structure, cost));
+            MenuPizza.Add(id, new Menu(arrMenu[0], arrMenu[1], Convert.ToInt32(arrMenu[2])));
         }
 
-        public static void UpdateMenu(Dictionary<byte, ClassLibrary.Menu> MenuPizza, byte id, string name, string structure, int cost )
+        public static void UpdateMenu(Dictionary<byte, ClassLibrary.Menu> MenuPizza, string pizzaInfo)
         {
-            MenuPizza[id] = new Menu(name, structure, cost);
+            string[] arrMenu = pizzaInfo.Split(new char[] { ';' });
+            MenuPizza[Convert.ToByte(arrMenu[0])] = new Menu(arrMenu[1], arrMenu[2], Convert.ToInt32(arrMenu[3]));
         }
 
         public static void DeletePizza(Dictionary<byte, ClassLibrary.Menu> MenuPizza, byte id)

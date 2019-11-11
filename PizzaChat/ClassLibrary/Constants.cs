@@ -21,11 +21,22 @@ namespace ClassLibrary
         public const string DilogMsg02 = "Oзнакомьтесь с нашим меню:";
         public const string DilogMsg03 = "Г-н администратор, введите номер неободимой команды :";
         public const string DilogMsg04 = DilogMsg03 + "1 - внести в меню новую пиццу; 2 - изменить пиццу; 3 - удалить пиццу из меню; 4 - вывести все меню.";
-
+        public const string DilogMsg05 = "Ошибка выбора варианта ответа.";
+        public const string DilogMsg06 = "Введине название новой пиццы.";
+        public const string DilogMsg07 = "Введине данные о новой пицце согласно шаблону: *название*;*соста*;*цена*";
+        public const string DilogMsg08 = "Новая пицца занесена в меню.";
+        public const string DilogMsg09 = "Для удаления пиццы введите ее номер";
+        public const string DilogMsg10 = "Пицца удалена.";
+        public const string DilogMsg11 = "Введине информацию для изменеия согласно шаблону: *номер*;*название*;*соста*;*цена*";
+        public const string DilogMsg12 = "Пицца обновлена.";
+        public const int AmountAdminVariants = 4;
         public const string DialogStatus01 = "start";
         public const string DialogStatus02 = "menu";
         public const string DialogStatusAdmin01 = "admin start";
-        
+        public const string DialogStatusAdmin02 = "create new pizza";
+        public const string DialogStatusAdmin03 = "change pizza";
+        public const string DialogStatusAdmin04 = "delete pizza";
+
         public static void CreateDictionary(Dictionary<byte, Person> People, Dictionary<byte, Menu> MenuPizza)
         {
             People.Add(1, new Person("Ludmila", "ludmila.sav.96@gmail.com", true));
