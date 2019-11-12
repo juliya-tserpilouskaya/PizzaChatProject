@@ -41,6 +41,8 @@ namespace PizzaChat
         readonly Dictionary<byte, Person> People = new Dictionary<byte, Person>();
         readonly Dictionary<byte, ClassLibrary.Menu> MenuPizza = new Dictionary<byte, ClassLibrary.Menu>();
 
+        CustomLogger logger = new CustomLogger();
+
         public MainForm()
         {
             InitializeComponent();
@@ -51,18 +53,16 @@ namespace PizzaChat
 
         public void MainForm_Load(object sender, EventArgs e)
         {
-
+            //TODO
         }
 
         public void SendSystemMsg(string msg)
         {
             fldDialogBox.AppendText("\n\n" + msg);
         }
-        CustomLogger _logger = new CustomLogger();
+        
         public void BtSendMsg_Click(object sender, EventArgs e)
         {
-            
-            
             if (fldMsgBox.Text.Length > 0)
             {
                 fldDialogBox.SelectionFont = new Font(fldDialogBox.Font.FontFamily, this.Font.Size, FontStyle.Italic);
@@ -82,11 +82,13 @@ namespace PizzaChat
                     {
                         DialogStatus = Constants.DialogStatusAdmin01;
                         SendSystemMsg(Constants.DialogMsg04);
+                        logger.UseLogger("INFO", "Администратор администрирует...", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                     }
                     else
                     {
                         DialogStatus = Constants.DialogStatus02;
                         SendSystemMsg(Constants.DialogMsg13);
+                        logger.UseLogger("INFO", "Be our guest! Put our service to the test!", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                     }
                     break;
                 case Constants.DialogStatusAdmin01:
@@ -97,20 +99,22 @@ namespace PizzaChat
                             case "1":
                                 DialogStatus = Constants.DialogStatusAdmin02;
                                 SendSystemMsg(Constants.DialogMsg07);
+                                logger.UseLogger("INFO", "Start" + Constants.DialogStatusAdmin02, Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                                 break;
                             case "2":
                                 DialogStatus = Constants.DialogStatusAdmin03;
                                 SendSystemMsg(Constants.DialogMsg11);
+                                logger.UseLogger("INFO", "Start" + Constants.DialogStatusAdmin03, Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                                 break;
                             case "3":
                                 DialogStatus = Constants.DialogStatusAdmin04;
                                 SendSystemMsg(Constants.DialogMsg09);
+                                logger.UseLogger("INFO", "Start" + Constants.DialogStatusAdmin04, Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                                 break;
                             case "4":
                                 ShowMenu();
                                 SendSystemMsg(Constants.DialogMsg04);
-                                break;
-                            default:
+                                logger.UseLogger("INFO", "Update menu list.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                                 break;
                         }
                     }
@@ -118,7 +122,7 @@ namespace PizzaChat
                     {
                         SendSystemMsg(Constants.DialogMsg05);
                         SendSystemMsg(Constants.DialogMsg04);
-                        _logger.UseLogger("DEBUG", Constants.DialogMsg06, Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
+                        logger.UseLogger("DEBUG", Constants.DialogMsg06, Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                     }
                     break;
                 case Constants.DialogStatusAdmin02:
@@ -126,6 +130,7 @@ namespace PizzaChat
                     SendSystemMsg(Constants.DialogMsg08);
                     SendSystemMsg(Constants.DialogMsg04);
                     DialogStatus = Constants.DialogStatusAdmin01;
+                    logger.UseLogger("INFO", Constants.DialogStatusAdmin02 + "ended.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                     break;
                 case Constants.DialogStatusAdmin03:
                     //Ошибка: проверить есть ли вообще такой номер в id библиотеки
@@ -134,6 +139,7 @@ namespace PizzaChat
                     SendSystemMsg(Constants.DialogMsg12);
                     SendSystemMsg(Constants.DialogMsg04);
                     DialogStatus = Constants.DialogStatusAdmin01;
+                    logger.UseLogger("INFO", Constants.DialogStatusAdmin03 + "ended.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                     break;
                 case Constants.DialogStatusAdmin04:
                     //Ошибка: проверить есть ли вообще такой номер в id библиотеки
@@ -142,27 +148,32 @@ namespace PizzaChat
                     SendSystemMsg(Constants.DialogMsg10);
                     SendSystemMsg(Constants.DialogMsg04);
                     DialogStatus = Constants.DialogStatusAdmin01;
+                    logger.UseLogger("INFO", Constants.DialogStatusAdmin04 + "ended.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                     break;
                 case Constants.DialogStatus02:
                     ClassLibrary.Bill.AddPizza(Order, MenuPizza, fldMsgBox.Text);
                     SendSystemMsg(Constants.DialogMsg14);
                     DialogStatus = Constants.DialogStatus03;
+                    logger.UseLogger("INFO", "Menu list updated." , Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                     break;
                 case Constants.DialogStatus03:
                     //Ошибка: проверить есть ли вообще такой номер в id библиотеки
                     //Ошибка: введена не цифра
                     if (fldMsgBox.Text == "нет")
                     {
+                        logger.UseLogger("INFO", "Stop ordering.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                         id = Person.SearchPerson(People, name);
                         if (id == 0)
                         {
                             DialogStatus = Constants.DialogStatus04;
+                            logger.UseLogger("INFO", Constants.DialogStatus04, Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                             SendSystemMsg(Constants.DialogMsg15);
-                            //string name, string email,bool mailing
+                            //string name, string email, bool mailing
                         }
                         else
                         {
                             DialogStatus = Constants.DialogStatus06;
+                            logger.UseLogger("INFO", "Search email in the database.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                             SendSystemMsg(Constants.DialogMsg19);
                             ShowOrder();
                             email = Person.SearchPersonEmail(People, id);
@@ -173,6 +184,7 @@ namespace PizzaChat
                     {
                         DialogStatus = Constants.DialogStatus02;
                         SendSystemMsg(Constants.DialogMsg13);
+                        logger.UseLogger("INFO", "Start ordering.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                     };
                     
                     break;
@@ -218,14 +230,17 @@ namespace PizzaChat
         public void SendMailing(string email)
         {
             SendSystemMsg(Constants.DialogMsg21);
+            logger.UseLogger("INFO", Constants.DialogMsg21, Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
             Email.EmailOrderPayment(email, billInfo);
             PauseMaker(pauseTime_ms);
 
             SendSystemMsg(Constants.DialogMsg22);
+            logger.UseLogger("INFO", Constants.DialogMsg22, Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
             Email.EmailOrderComplited(email, billInfo);
             PauseMaker(pauseTime_ms);
 
             SendSystemMsg(Constants.DialogMsg23);
+            logger.UseLogger("INFO", Constants.DialogMsg23, Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
             Email.EmailOrderDeliveredByCourier(email, billInfo);
         }
         bool IsValidEmail(string email)
@@ -233,10 +248,12 @@ namespace PizzaChat
             try
             {
                 var addr = new System.Net.Mail.MailAddress(email);
+                logger.UseLogger("ERROR", "Valid email entered.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                 return addr.Address == email;
             }
             catch
             {
+                logger.UseLogger("ERROR", "Пользователь тупит с вводом почты.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                 return false;
             }
         }
@@ -256,6 +273,7 @@ namespace PizzaChat
             }
                 
             SendSystemMsg(Constants.DialogMsg20 + sumOrder);
+            logger.UseLogger("INFO", "Order display.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
         }
 
         public void ShowMenu()
@@ -268,6 +286,7 @@ namespace PizzaChat
                 arrMenu[i] = arrMenu[i].Replace(";", "\n");
                 SendSystemMsg(arrMenu[i]);
             }
+            logger.UseLogger("INFO", "Show menu.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
         }
 
         public string DialogBox
