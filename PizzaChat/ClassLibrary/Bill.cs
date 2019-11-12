@@ -29,7 +29,6 @@ namespace ClassLibrary
                 if (order != String.Empty) order += "|";
                 order += $"№:{keyValue.Key}; название:{keyValue.Value._name}; двойной сыр: {cheese}; цена: {keyValue.Value._cost}; количество: {keyValue.Value._amount}";
             }
-
             return order;
         }
 
@@ -66,7 +65,6 @@ namespace ClassLibrary
                 id++;
             }
             
-
             Order.Add(id, new Bill(pizzaName, pizzaStructure, pizzaCost, pizzaCheese, Convert.ToInt32(arrOrder[2])));
         }
 

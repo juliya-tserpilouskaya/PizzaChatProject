@@ -17,29 +17,29 @@ namespace ClassLibrary
         public const string EmailOrderPaymentTitle = "Заказ оплачен."; 
         public const string EmailOrderPaymentMsgBody = "Здравствуйте, этим письмом мы уведомляем Вас о получении нами оплаты.";
         public const string AdminName = "admin";
-        public const string DilogMsg01 = "Здравствуйте, представьтесь, пожалуйста.";
-        public const string DilogMsg02 = "Oзнакомьтесь с нашим меню:";
-        public const string DilogMsg03 = "Г-н администратор, введите номер неободимой команды :";
-        public const string DilogMsg04 = DilogMsg03 + "1 - внести в меню новую пиццу; 2 - изменить пиццу; 3 - удалить пиццу из меню; 4 - вывести все меню.";
-        public const string DilogMsg05 = "Ошибка выбора варианта ответа.";
-        public const string DilogMsg06 = "Введине название новой пиццы.";
-        public const string DilogMsg07 = "Введине данные о новой пицце согласно шаблону: *название*;*соста*;*цена*";
-        public const string DilogMsg08 = "Новая пицца занесена в меню.";
-        public const string DilogMsg09 = "Для удаления пиццы введите ее номер";
-        public const string DilogMsg10 = "Пицца удалена.";
-        public const string DilogMsg11 = "Введине информацию для изменеия согласно шаблону: *номер*;*название*;*соста*;*цена*";
-        public const string DilogMsg12 = "Пицца обновлена.";
-        public const string DilogMsg13 = "Введите данные о заказе согласно шаблону: *номер пиццы*;*нужен ли двойной сыр (да/нет)*;*количество пицц*.";
-        public const string DilogMsg14 = "Пицца добавлена к заказу, желаете ли еще? (да/нет)";
-        public const string DilogMsg15 = "Введите почту.";
-        public const string DilogMsg16 = "Почта введена не верно, введите ее повторно.";
-        public const string DilogMsg17 = "Необходима ли Вам подписка на рассылки? (да/нет)";
-        public const string DilogMsg18 = "Пользователь успешно создан.";
-        public const string DilogMsg19 = "Информация о заказе.";
-        public const string DilogMsg20 = "Сумма счета:";
-        public const string DilogMsg21 = "Заказ оплачен.";
-        public const string DilogMsg22 = "Заказ скомплектован.";
-        public const string DilogMsg23 = "Заказ доставлен курьером.";
+        public const string DialogMsg01 = "Здравствуйте, представьтесь, пожалуйста.";
+        public const string DialogMsg02 = "Oзнакомьтесь с нашим меню:";
+        public const string DialogMsg03 = "Г-н администратор, введите номер неободимой команды :";
+        public const string DialogMsg04 = DialogMsg03 + "1 - внести в меню новую пиццу; 2 - изменить пиццу; 3 - удалить пиццу из меню; 4 - вывести все меню.";
+        public const string DialogMsg05 = "Ошибка выбора варианта ответа.";
+        public const string DialogMsg06 = "Введине название новой пиццы.";
+        public const string DialogMsg07 = "Введине данные о новой пицце согласно шаблону: *название*;*соста*;*цена*";
+        public const string DialogMsg08 = "Новая пицца занесена в меню.";
+        public const string DialogMsg09 = "Для удаления пиццы введите ее номер";
+        public const string DialogMsg10 = "Пицца удалена.";
+        public const string DialogMsg11 = "Введине информацию для изменеия согласно шаблону: *номер*;*название*;*соста*;*цена*";
+        public const string DialogMsg12 = "Пицца обновлена.";
+        public const string DialogMsg13 = "Введите данные о заказе согласно шаблону: *номер пиццы*;*нужен ли двойной сыр (да/нет)*;*количество пицц*.";
+        public const string DialogMsg14 = "Пицца добавлена к заказу, желаете ли еще? (да/нет)";
+        public const string DialogMsg15 = "Введите почту.";
+        public const string DialogMsg16 = "Почта введена не верно, введите ее повторно.";
+        public const string DialogMsg17 = "Необходима ли Вам подписка на рассылки? (да/нет)";
+        public const string DialogMsg18 = "Пользователь успешно создан.";
+        public const string DialogMsg19 = "Информация о заказе.";
+        public const string DialogMsg20 = "Сумма счета:";
+        public const string DialogMsg21 = "Заказ оплачен.";
+        public const string DialogMsg22 = "Заказ скомплектован.";
+        public const string DialogMsg23 = "Заказ доставлен курьером.";
         public const int AmountAdminVariants = 4;
         public const string DialogStatus01 = "start";
         public const string DialogStatus02 = "menu";
@@ -63,8 +63,6 @@ namespace ClassLibrary
             MenuPizza.Add(4, new Menu("Ранч пицца", "американский соус ранч, филе цыпленка, ветчина, свежие томаты, сыр моцарелла, базилик", 17));
             MenuPizza.Add(5, new Menu("Гавайская", "сырный соус, ветчина, филе цыпленка, ананасы, сыр моцарелла, базилик", 15));
             MenuPizza.Add(6, new Menu("Грибная", "чесночный соус, ветчина, свежие шампиньоны, сыр моцарелла, базилик", 17));
-
         }
-
     }
 }

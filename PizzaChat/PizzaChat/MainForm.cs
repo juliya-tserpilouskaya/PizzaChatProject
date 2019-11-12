@@ -20,8 +20,8 @@ namespace PizzaChat
     {
         string DialogBox { get; }
         string MsgBox { get; set; }
-
     }
+
     public partial class MainForm : Form, IMainForm
     {
         string name;
@@ -31,7 +31,6 @@ namespace PizzaChat
         public string DialogStatus=Constants.DialogStatus01;
         const int pauseTime_ms = 5000;
 
-
         Dictionary<byte, Bill> Order = new Dictionary<byte, Bill>();
         Dictionary<byte, Person> People = new Dictionary<byte, Person>();
         Dictionary<byte, ClassLibrary.Menu> MenuPizza = new Dictionary<byte, ClassLibrary.Menu>();
@@ -40,7 +39,7 @@ namespace PizzaChat
         {
             InitializeComponent();
             Constants.CreateDictionary(People, MenuPizza);
-            fldDialogBox.AppendText(Constants.DilogMsg01);
+            fldDialogBox.AppendText(Constants.DialogMsg01);
 
             btSendMsg.Click += new EventHandler(btSendMsg_Click);
         }
@@ -64,24 +63,23 @@ namespace PizzaChat
                 fldDialogBox.SelectionFont = new Font(fldDialogBox.Font.FontFamily, this.Font.Size, FontStyle.Regular);
             }
 
-
             switch (DialogStatus)
             {
                 case Constants.DialogStatus01:
                     name = fldMsgBox.Text;
                                        
-                    SendSystemMsg(Constants.DilogMsg02);
+                    SendSystemMsg(Constants.DialogMsg02);
                     ShowMenu();
 
                     if (name == Constants.AdminName)
                     {
                         DialogStatus = Constants.DialogStatusAdmin01;
-                        SendSystemMsg(Constants.DilogMsg04);
+                        SendSystemMsg(Constants.DialogMsg04);
                     }
                     else
                     {
                         DialogStatus = Constants.DialogStatus02;
-                        SendSystemMsg(Constants.DilogMsg13);
+                        SendSystemMsg(Constants.DialogMsg13);
                     }
                     break;
                 case Constants.DialogStatusAdmin01:
@@ -91,19 +89,19 @@ namespace PizzaChat
                         {
                             case "1":
                                 DialogStatus = Constants.DialogStatusAdmin02;
-                                SendSystemMsg(Constants.DilogMsg07);
+                                SendSystemMsg(Constants.DialogMsg07);
                                 break;
                             case "2":
                                 DialogStatus = Constants.DialogStatusAdmin03;
-                                SendSystemMsg(Constants.DilogMsg11);
+                                SendSystemMsg(Constants.DialogMsg11);
                                 break;
                             case "3":
                                 DialogStatus = Constants.DialogStatusAdmin04;
-                                SendSystemMsg(Constants.DilogMsg09);
+                                SendSystemMsg(Constants.DialogMsg09);
                                 break;
                             case "4":
                                 ShowMenu();
-                                SendSystemMsg(Constants.DilogMsg04);
+                                SendSystemMsg(Constants.DialogMsg04);
                                 break;
                             default:
                                 break;
@@ -111,35 +109,35 @@ namespace PizzaChat
                     }
                     else
                     {
-                        SendSystemMsg(Constants.DilogMsg05);
+                        SendSystemMsg(Constants.DialogMsg05);
                         //Ошибка вывода сообщения.
                     }
                     break;
                 case Constants.DialogStatusAdmin02:
                     ClassLibrary.Menu.CreatePizza(MenuPizza, fldMsgBox.Text);
-                    SendSystemMsg(Constants.DilogMsg08);
-                    SendSystemMsg(Constants.DilogMsg04);
+                    SendSystemMsg(Constants.DialogMsg08);
+                    SendSystemMsg(Constants.DialogMsg04);
                     DialogStatus = Constants.DialogStatusAdmin01;
                     break;
                 case Constants.DialogStatusAdmin03:
                     //Ошибка: проверить есть ли вообще такой номер в id библиотеки
                     //Ошибка: введена не цифра для цены или id
                     ClassLibrary.Menu.UpdateMenu(MenuPizza, fldMsgBox.Text);
-                    SendSystemMsg(Constants.DilogMsg12);
-                    SendSystemMsg(Constants.DilogMsg04);
+                    SendSystemMsg(Constants.DialogMsg12);
+                    SendSystemMsg(Constants.DialogMsg04);
                     DialogStatus = Constants.DialogStatusAdmin01;
                     break;
                 case Constants.DialogStatusAdmin04:
                     //Ошибка: проверить есть ли вообще такой номер в id библиотеки
                     //Ошибка: введена не цифра
                     ClassLibrary.Menu.DeletePizza(MenuPizza, Convert.ToByte(fldMsgBox.Text));
-                    SendSystemMsg(Constants.DilogMsg10);
-                    SendSystemMsg(Constants.DilogMsg04);
+                    SendSystemMsg(Constants.DialogMsg10);
+                    SendSystemMsg(Constants.DialogMsg04);
                     DialogStatus = Constants.DialogStatusAdmin01;
                     break;
                 case Constants.DialogStatus02:
                     ClassLibrary.Bill.AddPizza(Order, MenuPizza, fldMsgBox.Text);
-                    SendSystemMsg(Constants.DilogMsg14);
+                    SendSystemMsg(Constants.DialogMsg14);
                     DialogStatus = Constants.DialogStatus03;
                     break;
                 case Constants.DialogStatus03:
@@ -151,13 +149,13 @@ namespace PizzaChat
                         if (id == 0)
                         {
                             DialogStatus = Constants.DialogStatus04;
-                            SendSystemMsg(Constants.DilogMsg15);
+                            SendSystemMsg(Constants.DialogMsg15);
                             //string name, string email,bool mailing
                         }
                         else
                         {
                             DialogStatus = Constants.DialogStatus06;
-                            SendSystemMsg(Constants.DilogMsg19);
+                            SendSystemMsg(Constants.DialogMsg19);
                             ShowOrder();
                             email = Person.SearchPersonEmail(People, id);
                             SendMailing(email);
@@ -166,7 +164,7 @@ namespace PizzaChat
                     else
                     {
                         DialogStatus = Constants.DialogStatus02;
-                        SendSystemMsg(Constants.DilogMsg13);
+                        SendSystemMsg(Constants.DialogMsg13);
                     };
                     
                     break;
@@ -174,13 +172,13 @@ namespace PizzaChat
                     bool correctEmail = IsValidEmail(fldMsgBox.Text);
                     if (correctEmail == false)
                     {
-                        SendSystemMsg(Constants.DilogMsg16);
+                        SendSystemMsg(Constants.DialogMsg16);
                     }
                     else
                     {
                         email = fldMsgBox.Text;
                         DialogStatus = Constants.DialogStatus05;
-                        SendSystemMsg(Constants.DilogMsg17);
+                        SendSystemMsg(Constants.DialogMsg17);
                     }
                     break;
                 case Constants.DialogStatus05:
@@ -197,33 +195,30 @@ namespace PizzaChat
                     }
 
                     Person.CreateNewPerson(People, name, email, mailing);
-                    SendSystemMsg(Constants.DilogMsg18);
-                    SendSystemMsg(Constants.DilogMsg19);
+                    SendSystemMsg(Constants.DialogMsg18);
+                    SendSystemMsg(Constants.DialogMsg19);
                     DialogStatus = Constants.DialogStatus06;
                     ShowOrder();
                     SendMailing(email);
-        
                         break;
                 default: 
                         break;
-
             }
             fldMsgBox.Text = String.Empty;
         }
 
         public void SendMailing(string email)
         {
-            SendSystemMsg(Constants.DilogMsg21);
+            SendSystemMsg(Constants.DialogMsg21);
             Email.EmailOrderPayment(email);
             _pause(pauseTime_ms);
 
-            SendSystemMsg(Constants.DilogMsg22);
+            SendSystemMsg(Constants.DialogMsg22);
             Email.EmailOrderComplited(email);
             _pause(pauseTime_ms);
 
-            SendSystemMsg(Constants.DilogMsg23);
+            SendSystemMsg(Constants.DialogMsg23);
             Email.EmailOrderDeliveredByCourier(email);
-                
         }
         bool IsValidEmail(string email)
         {
@@ -237,13 +232,14 @@ namespace PizzaChat
                 return false;
             }
         }
+
         public void ShowOrder()
         {
             int sumOrder= Bill.BillSum(Order);
             string stringOrder = ClassLibrary.Bill.GetOrder(Order);
             stringOrder= stringOrder.Replace("|", "\n");
             SendSystemMsg(stringOrder);
-            SendSystemMsg(Constants.DilogMsg20 + sumOrder);
+            SendSystemMsg(Constants.DialogMsg20 + sumOrder);
         }
 
         public void ShowMenu()
@@ -257,10 +253,12 @@ namespace PizzaChat
                 SendSystemMsg(arrMenu[i]);
             }
         }
+
         public string DialogBox
         {
             get { return fldDialogBox.Text; }
         }
+
         public string MsgBox
         {
             set {fldMsgBox.Text = value; }

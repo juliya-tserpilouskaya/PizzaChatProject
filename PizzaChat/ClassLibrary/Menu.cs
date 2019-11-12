@@ -27,7 +27,6 @@ namespace ClassLibrary
                 if (menu != String.Empty) menu += "|";
                 menu += $"№:{keyValue.Key};название:{keyValue.Value._name};состав:{keyValue.Value._structure};цена: {keyValue.Value._cost}";
             }
-
             return menu;
         }
 
