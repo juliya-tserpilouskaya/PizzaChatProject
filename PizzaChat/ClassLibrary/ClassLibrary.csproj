@@ -44,8 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bill.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Dialog.cs" />
     <Compile Include="Email.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Person.cs" />

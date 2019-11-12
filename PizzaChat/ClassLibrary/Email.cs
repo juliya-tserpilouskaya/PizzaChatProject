@@ -9,24 +9,24 @@ using System.Net.Mail;
 
 namespace ClassLibrary
 {
-    class Email
+    public class Email
     {
-        public void EmailOrderComplited(string toEmailAddress)
+        public static void EmailOrderComplited(string toEmailAddress)
         {
             SendMail(toEmailAddress, Constants.EmailOrderComplitedTitle, Constants.EmailOrderComplitedMsgBody);
         }
 
-        public void EmailOrderDeliveredByCourier(string toEmailAddress)
+        public static void EmailOrderDeliveredByCourier(string toEmailAddress)
         {
             SendMail(toEmailAddress, Constants.EmailOrderDeliveredByCourierTitle, Constants.EmailOrderDeliveredByCourierMsgBody);
         }
 
-        public void EmailOrderPayment(string toEmailAddress)
+        public static void EmailOrderPayment(string toEmailAddress)
         {
             SendMail(toEmailAddress, Constants.EmailOrderPaymentTitle, Constants.EmailOrderPaymentMsgBody);
         }
 
-        public void SendMail(string toEmailAddress, string emailTitle, string emailMsgBody)
+        public static  void SendMail(string toEmailAddress, string emailTitle, string emailMsgBody)
         {
             MailAddress fromAddress = new MailAddress(Constants.FromEmailAddress);
             MailAddress toAddress = new MailAddress(toEmailAddress);

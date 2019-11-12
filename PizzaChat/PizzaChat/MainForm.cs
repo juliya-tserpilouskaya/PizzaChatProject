@@ -24,8 +24,12 @@ namespace PizzaChat
     public partial class MainForm : Form, IMainForm
     {
         string name;
+        byte id;
+        string email;
+        bool mailing=true;
         public string DialogStatus=Constants.DialogStatus01;
 
+        Dictionary<byte, Bill> Order = new Dictionary<byte, Bill>();
         Dictionary<byte, Person> People = new Dictionary<byte, Person>();
         Dictionary<byte, ClassLibrary.Menu> MenuPizza = new Dictionary<byte, ClassLibrary.Menu>();
 
@@ -74,7 +78,7 @@ namespace PizzaChat
                     else
                     {
                         DialogStatus = Constants.DialogStatus02;
-                        // введите че выбрали
+                        SendSystemMsg(Constants.DilogMsg13);
                     }
                     break;
                 case Constants.DialogStatusAdmin01:
@@ -130,9 +134,103 @@ namespace PizzaChat
                     SendSystemMsg(Constants.DilogMsg04);
                     DialogStatus = Constants.DialogStatusAdmin01;
                     break;
-                default: break;
+                case Constants.DialogStatus02:
+                    ClassLibrary.Bill.AddPizza(Order, MenuPizza, fldMsgBox.Text);
+                    SendSystemMsg(Constants.DilogMsg14);
+                    DialogStatus = Constants.DialogStatus03;
+                    break;
+                case Constants.DialogStatus03:
+                    //Ошибка: проверить есть ли вообще такой номер в id библиотеки
+                    //Ошибка: введена не цифра
+                    if (fldMsgBox.Text == "нет")
+                    {
+                        id = Person.SearchPerson(People, name);
+                        if (id == 0)
+                        {
+                            DialogStatus = Constants.DialogStatus04;
+                            SendSystemMsg(Constants.DilogMsg15);
+                            //string name, string email,bool mailing
+                        }
+                        else
+                        {
+                            DialogStatus = Constants.DialogStatus06;
+                            SendSystemMsg(Constants.DilogMsg19);
+                            ShowOrder();
+                            email = Person.SearchPersonEmail(People, id);
+                            SendMailing(email);
+                         }
+                    }
+                    else
+                    {
+                        DialogStatus = Constants.DialogStatus02;
+                        SendSystemMsg(Constants.DilogMsg13);
+                    };
+                    
+                    break;
+                case Constants.DialogStatus04:
+                    bool correctEmail = true;
+                    //проверка почты на правильност
+                    //метод возвращает true или false - подается на вход: fldMsgBox.Text
+                    if (correctEmail == false)
+                    {
+                        SendSystemMsg(Constants.DilogMsg16);
+                    }
+                    else
+                    {
+                        email = fldMsgBox.Text;
+                        DialogStatus = Constants.DialogStatus05;
+                        SendSystemMsg(Constants.DilogMsg17);
+                    }
+                    break;
+                case Constants.DialogStatus05:
+                    switch (fldMsgBox.Text)
+                    {
+                        case "нет":
+                            mailing = false;
+                            break;
+                        case "да":
+                            mailing = true;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    Person.CreateNewPerson(People, name, email, mailing);
+                    SendSystemMsg(Constants.DilogMsg18);
+                    SendSystemMsg(Constants.DilogMsg19);
+                    DialogStatus = Constants.DialogStatus06;
+                    ShowOrder();
+                    SendMailing(email);
+        
+                        break;
+                default: 
+                        break;
+
             }
             fldMsgBox.Text = String.Empty;
+        }
+
+        public void SendMailing(string email)
+        {
+            SendSystemMsg(Constants.DilogMsg21);
+            Email.EmailOrderPayment(email);
+            //пауза
+
+            SendSystemMsg(Constants.DilogMsg22);
+            Email.EmailOrderComplited(email);
+            //пауза
+
+            SendSystemMsg(Constants.DilogMsg23);
+            Email.EmailOrderDeliveredByCourier(email);
+                
+        }
+        public void ShowOrder()
+        {
+            int sumOrder= Bill.BillSum(Order);
+            string stringOrder = ClassLibrary.Bill.GetOrder(Order);
+            stringOrder= stringOrder.Replace("|", "\n");
+            SendSystemMsg(stringOrder);
+            SendSystemMsg(Constants.DilogMsg20 + sumOrder);
         }
 
         public void ShowMenu()
@@ -155,7 +253,6 @@ namespace PizzaChat
             set {fldMsgBox.Text = value; }
             get { return fldMsgBox.Text;}
         }
-
 
         public event EventHandler SendMsg;
 
