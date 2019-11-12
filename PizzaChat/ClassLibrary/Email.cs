@@ -34,7 +34,7 @@ namespace ClassLibrary
             email.Subject = emailTitle;
             email.Body = emailMsgBody;
             email.IsBodyHtml = true;
-            SmtpClient smtp = new SmtpClient("smtp.mail.ru", 587);
+            SmtpClient smtp = new SmtpClient("smtp.mail.ru", 587); //вынести в конст
             smtp.Credentials = new NetworkCredential(Constants.FromEmailAddress, Constants.FromEmailPassword);
             smtp.EnableSsl = true;
             smtp.Send(email);

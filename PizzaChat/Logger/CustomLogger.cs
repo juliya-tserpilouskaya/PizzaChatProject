@@ -73,7 +73,7 @@ namespace Logger
         {
             try
             {
-                using (StreamWriter sw = new StreamWriter(writePath, true/*, System.Text.Encoding.Default*/))
+                using (StreamWriter sw = new StreamWriter(writePath, true, System.Text.Encoding.Default))
                 {
                     await sw.WriteLineAsync(text);
                 }

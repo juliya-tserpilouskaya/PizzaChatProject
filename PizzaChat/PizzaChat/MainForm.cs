@@ -48,7 +48,7 @@ namespace PizzaChat
             InitializeComponent();
             Constants.CreateDictionary(People, MenuPizza);
             fldDialogBox.AppendText(Constants.DialogMsg01);
-            btSendMsg.Click += new EventHandler(BtSendMsg_Click);
+            btSendMsg.Click += new EventHandler(BtSendMsg_Click); //event
         }
 
         public void MainForm_Load(object sender, EventArgs e) { }
@@ -244,6 +244,7 @@ namespace PizzaChat
         {
             try
             {
+                //усилить проверку, так как в отправке словила эксепшн
                 var addr = new System.Net.Mail.MailAddress(email);
                 logger.UseLogger("ERROR", "Valid email entered.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                 return addr.Address == email;
