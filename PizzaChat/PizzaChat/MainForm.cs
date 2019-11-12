@@ -12,6 +12,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Windows.Media;
 using ClassLibrary;
+using System.Diagnostics;
 
 namespace PizzaChat
 {
@@ -28,6 +29,8 @@ namespace PizzaChat
         string email;
         bool mailing=true;
         public string DialogStatus=Constants.DialogStatus01;
+        const int pauseTime_ms = 5000;
+
 
         Dictionary<byte, Bill> Order = new Dictionary<byte, Bill>();
         Dictionary<byte, Person> People = new Dictionary<byte, Person>();
@@ -214,11 +217,11 @@ namespace PizzaChat
         {
             SendSystemMsg(Constants.DilogMsg21);
             Email.EmailOrderPayment(email);
-            //пауза
+            _pause(pauseTime_ms);
 
             SendSystemMsg(Constants.DilogMsg22);
             Email.EmailOrderComplited(email);
-            //пауза
+            _pause(pauseTime_ms);
 
             SendSystemMsg(Constants.DilogMsg23);
             Email.EmailOrderDeliveredByCourier(email);
@@ -255,6 +258,14 @@ namespace PizzaChat
         }
 
         public event EventHandler SendMsg;
+
+        private void _pause(int value)
+        {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            while (sw.ElapsedMilliseconds < value)
+                Application.DoEvents();
+        }
 
         private void FldMsgBox_TextChanged(object sender, EventArgs e)
         {
