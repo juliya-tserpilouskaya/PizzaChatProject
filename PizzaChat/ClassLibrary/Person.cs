@@ -44,7 +44,6 @@ namespace ClassLibrary
             {
                 if (People[i]._name == name) id=i;
             }
-
             return id;
         }
 

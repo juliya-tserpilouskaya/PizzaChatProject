@@ -41,7 +41,7 @@ namespace PizzaChat
         readonly Dictionary<byte, Person> People = new Dictionary<byte, Person>();
         readonly Dictionary<byte, ClassLibrary.Menu> MenuPizza = new Dictionary<byte, ClassLibrary.Menu>();
 
-        CustomLogger logger = new CustomLogger();
+        readonly CustomLogger logger = new CustomLogger();
 
         public MainForm()
         {
@@ -51,10 +51,7 @@ namespace PizzaChat
             btSendMsg.Click += new EventHandler(BtSendMsg_Click);
         }
 
-        public void MainForm_Load(object sender, EventArgs e)
-        {
-            //TODO
-        }
+        public void MainForm_Load(object sender, EventArgs e) { }
 
         public void SendSystemMsg(string msg)
         {
@@ -82,7 +79,7 @@ namespace PizzaChat
                     {
                         DialogStatus = Constants.DialogStatusAdmin01;
                         SendSystemMsg(Constants.DialogMsg04);
-                        logger.UseLogger("INFO", "Администратор администрирует...", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
+                        logger.UseLogger("INFO", "Admin administrates...", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                     }
                     else
                     {
@@ -159,7 +156,7 @@ namespace PizzaChat
                 case Constants.DialogStatus03:
                     //Ошибка: проверить есть ли вообще такой номер в id библиотеки
                     //Ошибка: введена не цифра
-                    if (fldMsgBox.Text == "нет")
+                    if (fldMsgBox.Text.ToLower().Contains("нет"))
                     {
                         logger.UseLogger("INFO", "Stop ordering.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                         id = Person.SearchPerson(People, name);
@@ -202,7 +199,7 @@ namespace PizzaChat
                     }
                     break;
                 case Constants.DialogStatus05:
-                    switch (fldMsgBox.Text)
+                    switch (fldMsgBox.Text.ToLower())
                     {
                         case "нет":
                             mailing = false;
@@ -253,7 +250,7 @@ namespace PizzaChat
             }
             catch
             {
-                logger.UseLogger("ERROR", "Пользователь тупит с вводом почты.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
+                logger.UseLogger("ERROR", "Error entering mailbox address.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                 return false;
             }
         }

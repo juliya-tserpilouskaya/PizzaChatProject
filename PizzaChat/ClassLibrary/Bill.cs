@@ -41,7 +41,7 @@ namespace ClassLibrary
             int pizzaCost = MenuPizza[Convert.ToByte(arrOrder[0])]._cost;
             bool pizzaCheese=false;
 
-            switch (arrOrder[1])
+            switch (arrOrder[1].ToLower())
             {
                 case "да":
                     pizzaCheese = true;
@@ -76,7 +76,7 @@ namespace ClassLibrary
                 sum += Order[keyValue.Key]._cost * Order[keyValue.Key]._amount;
             }
 
-            if (DateTime.Now.DayOfWeek == DayOfWeek.Tuesday) sum = sum *(1-Constants.TuesdaySale);
+            if (DateTime.Now.DayOfWeek == DayOfWeek.Tuesday) sum *= 1-Constants.TuesdaySale;
             return sum;
         }
 
