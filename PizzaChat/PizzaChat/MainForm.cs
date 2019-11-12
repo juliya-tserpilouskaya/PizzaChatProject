@@ -32,9 +32,9 @@ namespace PizzaChat
         public string DialogStatus=Constants.DialogStatus01;
         const int pauseTime_ms = 5000;
 
-        Dictionary<byte, Bill> Order = new Dictionary<byte, Bill>();
-        Dictionary<byte, Person> People = new Dictionary<byte, Person>();
-        Dictionary<byte, ClassLibrary.Menu> MenuPizza = new Dictionary<byte, ClassLibrary.Menu>();
+        readonly Dictionary<byte, Bill> Order = new Dictionary<byte, Bill>();
+        readonly Dictionary<byte, Person> People = new Dictionary<byte, Person>();
+        readonly Dictionary<byte, ClassLibrary.Menu> MenuPizza = new Dictionary<byte, ClassLibrary.Menu>();
 
         public MainForm()
         {
@@ -42,7 +42,7 @@ namespace PizzaChat
             Constants.CreateDictionary(People, MenuPizza);
             fldDialogBox.AppendText(Constants.DialogMsg01);
 
-            btSendMsg.Click += new EventHandler(btSendMsg_Click);
+            btSendMsg.Click += new EventHandler(BtSendMsg_Click);
         }
 
         public void MainForm_Load(object sender, EventArgs e)
@@ -55,7 +55,7 @@ namespace PizzaChat
             fldDialogBox.AppendText("\n\n" + msg);
         }
 
-        public void btSendMsg_Click(object sender, EventArgs e)
+        public void BtSendMsg_Click(object sender, EventArgs e)
         {
             if (fldMsgBox.Text.Length > 0)
             {
@@ -213,11 +213,11 @@ namespace PizzaChat
         {
             SendSystemMsg(Constants.DialogMsg21);
             Email.EmailOrderPayment(email, billInfo);
-            _pause(pauseTime_ms);
+            PauseMaker(pauseTime_ms);
 
             SendSystemMsg(Constants.DialogMsg22);
             Email.EmailOrderComplited(email, billInfo);
-            _pause(pauseTime_ms);
+            PauseMaker(pauseTime_ms);
 
             SendSystemMsg(Constants.DialogMsg23);
             Email.EmailOrderDeliveredByCourier(email, billInfo);
@@ -237,7 +237,7 @@ namespace PizzaChat
 
         public void ShowOrder()
         {
-            int sumOrder= Bill.BillSum(Order);
+            double sumOrder= Bill.BillSum(Order);
             string stringOrder = ClassLibrary.Bill.GetOrder(Order);
             stringOrder= stringOrder.Replace("|", "\n");
             SendSystemMsg(stringOrder);
@@ -275,9 +275,9 @@ namespace PizzaChat
             get { return fldMsgBox.Text;}
         }
 
-        public event EventHandler SendMsg;
+        //public event EventHandler SendMsg;
 
-        private void _pause(int value)
+        private void PauseMaker(int value)
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();

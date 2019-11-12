@@ -68,15 +68,15 @@ namespace ClassLibrary
             Order.Add(id, new Bill(pizzaName, pizzaStructure, pizzaCost, pizzaCheese, Convert.ToInt32(arrOrder[2])));
         }
 
-        public static int BillSum(Dictionary<byte, Bill> Order)
+        public static double BillSum(Dictionary<byte, Bill> Order)
         {
-            int sum = 0;
+            double sum = 0;
             foreach (KeyValuePair<byte, Bill> keyValue in Order)
             {
                 sum += Order[keyValue.Key]._cost * Order[keyValue.Key]._amount;
             }
 
-            if (DateTime.Now.DayOfWeek == DayOfWeek.Tuesday) sum = Convert.ToInt32(Convert.ToDouble(sum) *(1-Constants.TuesdaySale));
+            if (DateTime.Now.DayOfWeek == DayOfWeek.Tuesday) sum = sum *(1-Constants.TuesdaySale);
             return sum;
         }
 
