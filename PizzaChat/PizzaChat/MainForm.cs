@@ -13,13 +13,18 @@ using System.Windows.Forms;
 using System.Windows.Media;
 using ClassLibrary;
 using System.Diagnostics;
+using Logger;
+using System.Threading;
+using System.Runtime.CompilerServices;
 
 namespace PizzaChat
 {
+
     public interface IMainForm
     {
         string DialogBox { get; }
         string MsgBox { get; set; }
+        
     }
 
     public partial class MainForm : Form, IMainForm
@@ -41,7 +46,6 @@ namespace PizzaChat
             InitializeComponent();
             Constants.CreateDictionary(People, MenuPizza);
             fldDialogBox.AppendText(Constants.DialogMsg01);
-
             btSendMsg.Click += new EventHandler(BtSendMsg_Click);
         }
 
@@ -54,9 +58,11 @@ namespace PizzaChat
         {
             fldDialogBox.AppendText("\n\n" + msg);
         }
-
+        CustomLogger _logger = new CustomLogger();
         public void BtSendMsg_Click(object sender, EventArgs e)
         {
+            
+            
             if (fldMsgBox.Text.Length > 0)
             {
                 fldDialogBox.SelectionFont = new Font(fldDialogBox.Font.FontFamily, this.Font.Size, FontStyle.Italic);
@@ -112,7 +118,7 @@ namespace PizzaChat
                     {
                         SendSystemMsg(Constants.DialogMsg05);
                         SendSystemMsg(Constants.DialogMsg04);
-                        //Ошибка вывода сообщения.
+                        _logger.UseLogger("DEBUG", Constants.DialogMsg06, Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                     }
                     break;
                 case Constants.DialogStatusAdmin02:
@@ -273,6 +279,15 @@ namespace PizzaChat
         {
             set {fldMsgBox.Text = value; }
             get { return fldMsgBox.Text;}
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public string GetCurrentMethod()
+        {
+            StackTrace st = new StackTrace();
+            StackFrame sf = st.GetFrame(1);
+
+            return sf.GetMethod().Name;
         }
 
         //public event EventHandler SendMsg;

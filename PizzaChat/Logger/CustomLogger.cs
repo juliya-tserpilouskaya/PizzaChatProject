@@ -7,13 +7,7 @@ using System.Threading.Tasks;
 
 namespace Logger
 {
-    public interface ILogger
-    {
-        void UseLogger(string target, string messaage, string thread, string codePlace);
-        string InitMyLogger();
-        void LogWrite(string text, string writePath);
-    }
-    public class CustomLogger : ILogger
+    public class CustomLogger
     {
         public void UseLogger(string target, string messaage, string thread, string codePlace)
         {
@@ -45,7 +39,6 @@ namespace Logger
                 Directory.CreateDirectory(LogDir);
             }
             string[] myFiles = Directory.GetFiles(LogDir);
-            Console.WriteLine();
             int counter = 0;
             string writePath = Path.Combine(Environment.CurrentDirectory, @"..\..\..\" + $@"\Log\log {DateTime.Now:yyyyMMdd}_{counter}.txt");
             short logFileLenght = 30_720;
@@ -55,7 +48,7 @@ namespace Logger
             {
                 for (int i = 0; i < myFiles.Length; i++)
                 {
-                    string[] split2 = myFiles[i].Split(new char[] { '_', '.' });
+                    string[] split2 = System.IO.Path.GetFileName(myFiles[i]).Split(new char[] { '_', '.' });
                     countNum[i] = Convert.ToInt32(split2[1]);
                 }
                 for (int i = 0; i < countNum.Length; i++)
@@ -84,14 +77,13 @@ namespace Logger
                 {
                     await sw.WriteLineAsync(text);
                 }
-                //Console.WriteLine("Запись выполнена");
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
         }
-        static void Main(string[] args)
+        static void Main()
         {
         }
     }

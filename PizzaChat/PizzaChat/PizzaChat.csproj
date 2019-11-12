@@ -85,6 +85,10 @@
       <Project>{0fe62bdf-5b06-45b0-b2c0-78f29722cfb7}</Project>
       <Name>ClassLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logger\Logger.csproj">
+      <Project>{fa6e71f5-29eb-4bdd-b77e-92532a67c9a9}</Project>
+      <Name>Logger</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
