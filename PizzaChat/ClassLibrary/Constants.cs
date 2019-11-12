@@ -17,6 +17,7 @@ namespace ClassLibrary
         public const string EmailOrderPaymentTitle = "Заказ оплачен."; 
         public const string EmailOrderPaymentMsgBody = "Здравствуйте, этим письмом мы уведомляем Вас о получении нами оплаты.";
         public const string AdminName = "admin";
+        public const double TuesdaySale = 0.2;
         public const string DialogMsg01 = "Здравствуйте, представьтесь, пожалуйста.";
         public const string DialogMsg02 = "Oзнакомьтесь с нашим меню:";
         public const string DialogMsg03 = "Г-н администратор, введите номер неободимой команды :";
@@ -40,6 +41,7 @@ namespace ClassLibrary
         public const string DialogMsg21 = "Заказ оплачен.";
         public const string DialogMsg22 = "Заказ скомплектован.";
         public const string DialogMsg23 = "Заказ доставлен курьером.";
+        public const string DialogMsg24 = " (C учетом скидки.)";
         public const int AmountAdminVariants = 4;
         public const string DialogStatus01 = "start";
         public const string DialogStatus02 = "menu";

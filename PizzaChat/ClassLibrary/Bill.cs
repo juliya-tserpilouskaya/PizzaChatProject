@@ -76,6 +76,7 @@ namespace ClassLibrary
                 sum += Order[keyValue.Key]._cost * Order[keyValue.Key]._amount;
             }
 
+            if (DateTime.Now.DayOfWeek == DayOfWeek.Tuesday) sum = Convert.ToInt32(Convert.ToDouble(sum) *(1-Constants.TuesdaySale));
             return sum;
         }
 

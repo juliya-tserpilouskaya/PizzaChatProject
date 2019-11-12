@@ -11,19 +11,19 @@ namespace ClassLibrary
 {
     public class Email
     {
-        public static void EmailOrderComplited(string toEmailAddress)
+        public static void EmailOrderComplited(string toEmailAddress, string billInfo)
         {
-            SendMail(toEmailAddress, Constants.EmailOrderComplitedTitle, Constants.EmailOrderComplitedMsgBody);
+            SendMail(toEmailAddress, Constants.EmailOrderComplitedTitle, Constants.EmailOrderComplitedMsgBody + "\n\n" + billInfo);
         }
 
-        public static void EmailOrderDeliveredByCourier(string toEmailAddress)
+        public static void EmailOrderDeliveredByCourier(string toEmailAddress, string billInfo)
         {
-            SendMail(toEmailAddress, Constants.EmailOrderDeliveredByCourierTitle, Constants.EmailOrderDeliveredByCourierMsgBody);
+            SendMail(toEmailAddress, Constants.EmailOrderDeliveredByCourierTitle, Constants.EmailOrderDeliveredByCourierMsgBody + "\n\n" + billInfo);
         }
 
-        public static void EmailOrderPayment(string toEmailAddress)
+        public static void EmailOrderPayment(string toEmailAddress, string billInfo)
         {
-            SendMail(toEmailAddress, Constants.EmailOrderPaymentTitle, Constants.EmailOrderPaymentMsgBody);
+            SendMail(toEmailAddress, Constants.EmailOrderPaymentTitle, Constants.EmailOrderPaymentMsgBody + "\n\n" + billInfo);
         }
 
         public static  void SendMail(string toEmailAddress, string emailTitle, string emailMsgBody)

@@ -28,6 +28,7 @@ namespace PizzaChat
         byte id;
         string email;
         bool mailing=true;
+        string billInfo;
         public string DialogStatus=Constants.DialogStatus01;
         const int pauseTime_ms = 5000;
 
@@ -110,6 +111,7 @@ namespace PizzaChat
                     else
                     {
                         SendSystemMsg(Constants.DialogMsg05);
+                        SendSystemMsg(Constants.DialogMsg04);
                         //Ошибка вывода сообщения.
                     }
                     break;
@@ -210,15 +212,15 @@ namespace PizzaChat
         public void SendMailing(string email)
         {
             SendSystemMsg(Constants.DialogMsg21);
-            Email.EmailOrderPayment(email);
+            Email.EmailOrderPayment(email, billInfo);
             _pause(pauseTime_ms);
 
             SendSystemMsg(Constants.DialogMsg22);
-            Email.EmailOrderComplited(email);
+            Email.EmailOrderComplited(email, billInfo);
             _pause(pauseTime_ms);
 
             SendSystemMsg(Constants.DialogMsg23);
-            Email.EmailOrderDeliveredByCourier(email);
+            Email.EmailOrderDeliveredByCourier(email, billInfo);
         }
         bool IsValidEmail(string email)
         {
@@ -239,6 +241,14 @@ namespace PizzaChat
             string stringOrder = ClassLibrary.Bill.GetOrder(Order);
             stringOrder= stringOrder.Replace("|", "\n");
             SendSystemMsg(stringOrder);
+
+            billInfo = stringOrder + Constants.DialogMsg20 + sumOrder;
+
+            if (DateTime.Now.DayOfWeek == DayOfWeek.Tuesday)
+            {
+                billInfo += Constants.DialogMsg24;
+            }
+                
             SendSystemMsg(Constants.DialogMsg20 + sumOrder);
         }
 
