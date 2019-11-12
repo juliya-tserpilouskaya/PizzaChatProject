@@ -171,9 +171,7 @@ namespace PizzaChat
                     
                     break;
                 case Constants.DialogStatus04:
-                    bool correctEmail = true;
-                    //проверка почты на правильност
-                    //метод возвращает true или false - подается на вход: fldMsgBox.Text
+                    bool correctEmail = IsValidEmail(fldMsgBox.Text);
                     if (correctEmail == false)
                     {
                         SendSystemMsg(Constants.DilogMsg16);
@@ -226,6 +224,18 @@ namespace PizzaChat
             SendSystemMsg(Constants.DilogMsg23);
             Email.EmailOrderDeliveredByCourier(email);
                 
+        }
+        bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
         }
         public void ShowOrder()
         {
