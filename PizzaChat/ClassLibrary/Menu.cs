@@ -35,7 +35,7 @@ namespace ClassLibrary
 
             foreach (KeyValuePair<byte, Menu> keyValue in MenuPizza)
             {
-                if (keyValue.Key == id) { total = true};
+                if (keyValue.Key == id) { total = true; }
             }
              return total;
         }

@@ -89,6 +89,12 @@ namespace PizzaChat
 
                         break;
                     case Constants.DialogStatusAdmin01:
+                        int variant;
+                        if (!int.TryParse(fldMsgBox.Text, out variant))
+                        {
+                            SendSystemMsg(Constants.DialogMsg25);
+                            break;
+                        }
                         if (Convert.ToInt32(fldMsgBox.Text) > 0 && Convert.ToInt32(fldMsgBox.Text) <= Constants.AmountAdminVariants)
                         {
                             switch (fldMsgBox.Text)
@@ -124,29 +130,47 @@ namespace PizzaChat
                         }
                         break;
                     case Constants.DialogStatusAdmin02:
-                        ClassLibrary.Menu.CreatePizza(MenuPizza, fldMsgBox.Text);
-                        SendSystemMsg(Constants.DialogMsg08);
-                        SendSystemMsg(Constants.DialogMsg04);
-                        DialogStatus = Constants.DialogStatusAdmin01;
-                        logger.UseLogger("INFO", Constants.DialogStatusAdmin02 + "ended.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
+                        if (InputCheckAdmin(fldMsgBox.Text) == true)
+                        {
+                            ClassLibrary.Menu.CreatePizza(MenuPizza, fldMsgBox.Text);
+                            SendSystemMsg(Constants.DialogMsg08);
+                            SendSystemMsg(Constants.DialogMsg04);
+                            DialogStatus = Constants.DialogStatusAdmin01;
+                            logger.UseLogger("INFO", Constants.DialogStatusAdmin02 + "ended.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
+                        }
+                        else
+                        {
+                            SendSystemMsg(Constants.DialogMsg25);
+                        }
                         break;
                     case Constants.DialogStatusAdmin03:
-                        //Ошибка: проверить есть ли вообще такой номер в id библиотеки
-                        //Ошибка: введена не цифра для цены или id
-                        ClassLibrary.Menu.UpdateMenu(MenuPizza, fldMsgBox.Text);
-                        SendSystemMsg(Constants.DialogMsg12);
-                        SendSystemMsg(Constants.DialogMsg04);
-                        DialogStatus = Constants.DialogStatusAdmin01;
-                        logger.UseLogger("INFO", Constants.DialogStatusAdmin03 + "ended.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
+                        if (InputCheckAdmin(fldMsgBox.Text) == true)
+                        {
+                            ClassLibrary.Menu.UpdateMenu(MenuPizza, fldMsgBox.Text);
+                            SendSystemMsg(Constants.DialogMsg12);
+                            SendSystemMsg(Constants.DialogMsg04);
+                            DialogStatus = Constants.DialogStatusAdmin01;
+                            logger.UseLogger("INFO", Constants.DialogStatusAdmin03 + "ended.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
+                        }
+                        else
+                        {
+                            SendSystemMsg(Constants.DialogMsg25);
+                        }
                         break;
                     case Constants.DialogStatusAdmin04:
-                        //Ошибка: проверить есть ли вообще такой номер в id библиотеки
-                        //Ошибка: введена не цифра
-                        ClassLibrary.Menu.DeletePizza(MenuPizza, Convert.ToByte(fldMsgBox.Text));
-                        SendSystemMsg(Constants.DialogMsg10);
-                        SendSystemMsg(Constants.DialogMsg04);
-                        DialogStatus = Constants.DialogStatusAdmin01;
-                        logger.UseLogger("INFO", Constants.DialogStatusAdmin04 + "ended.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
+                        if (InputCheckAdmin(fldMsgBox.Text) == true)
+                        {
+
+                            ClassLibrary.Menu.DeletePizza(MenuPizza, Convert.ToByte(fldMsgBox.Text));
+                            SendSystemMsg(Constants.DialogMsg10);
+                            SendSystemMsg(Constants.DialogMsg04);
+                            DialogStatus = Constants.DialogStatusAdmin01;
+                            logger.UseLogger("INFO", Constants.DialogStatusAdmin04 + "ended.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
+                        }
+                        else
+                        {
+                            SendSystemMsg(Constants.DialogMsg25);
+                        }
                         break;
                     case Constants.DialogStatus02:
                         if (InputCheck(fldMsgBox.Text)==true) 
@@ -162,36 +186,40 @@ namespace PizzaChat
                         }                    
                         break;
                     case Constants.DialogStatus03:
-                        //Ошибка: проверить есть ли вообще такой номер в id библиотеки
-                        //Ошибка: введена не цифра
-                        if (fldMsgBox.Text.ToLower().Contains("нет"))
+                        if (fldMsgBox.Text.ToLower() != "нет" && fldMsgBox.Text.ToLower() != "да")
                         {
-                            logger.UseLogger("INFO", "Stop ordering.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
-                            id = Person.SearchPerson(People, name);
-                            if (id == 0)
+                            if (fldMsgBox.Text.ToLower().Contains("нет"))
                             {
-                                DialogStatus = Constants.DialogStatus04;
-                                logger.UseLogger("INFO", Constants.DialogStatus04, Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
-                                SendSystemMsg(Constants.DialogMsg15);
-                                //string name, string email, bool mailing
+                                logger.UseLogger("INFO", "Stop ordering.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
+                                id = Person.SearchPerson(People, name);
+                                if (id == 0)
+                                {
+                                    DialogStatus = Constants.DialogStatus04;
+                                    logger.UseLogger("INFO", Constants.DialogStatus04, Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
+                                    SendSystemMsg(Constants.DialogMsg15);
+                                    //string name, string email, bool mailing
+                                }
+                                else
+                                {
+                                    DialogStatus = Constants.DialogStatus06;
+                                    logger.UseLogger("INFO", "Search email in the database.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
+                                    SendSystemMsg(Constants.DialogMsg19);
+                                    ShowOrder();
+                                    email = Person.SearchPersonEmail(People, id);
+                                    SendMailing(email);
+                                }
                             }
                             else
                             {
-                                DialogStatus = Constants.DialogStatus06;
-                                logger.UseLogger("INFO", "Search email in the database.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
-                                SendSystemMsg(Constants.DialogMsg19);
-                                ShowOrder();
-                                email = Person.SearchPersonEmail(People, id);
-                                SendMailing(email);
+                                DialogStatus = Constants.DialogStatus02;
+                                SendSystemMsg(Constants.DialogMsg13);
+                                logger.UseLogger("INFO", "Start ordering.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                             }
                         }
                         else
                         {
-                            DialogStatus = Constants.DialogStatus02;
-                            SendSystemMsg(Constants.DialogMsg13);
-                            logger.UseLogger("INFO", "Start ordering.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
-                        };
-
+                            SendSystemMsg(Constants.DialogMsg25);
+                        }
                         break;
                     case Constants.DialogStatus04:
                         bool correctEmail = IsValidEmail(fldMsgBox.Text);
@@ -207,24 +235,27 @@ namespace PizzaChat
                         }
                         break;
                     case Constants.DialogStatus05:
-                        switch (fldMsgBox.Text.ToLower())
+                        if (fldMsgBox.Text.ToLower() != "да" && fldMsgBox.Text.ToLower() != "нет")
                         {
-                            case "нет":
-                                mailing = false;
-                                break;
-                            case "да":
-                                mailing = true;
-                                break;
-                            default:
-                                break;
+                            switch (fldMsgBox.Text.ToLower())
+                            {
+                                case "нет":
+                                    mailing = false;
+                                    break;
+                                case "да":
+                                    mailing = true;
+                                    break;
+                                default:
+                                    break;
+                            }
+                            fldMsgBox.Text = String.Empty;
+                            Person.CreateNewPerson(People, name, email, mailing);
+                            SendSystemMsg(Constants.DialogMsg18);
+                            SendSystemMsg(Constants.DialogMsg19);
+                            DialogStatus = Constants.DialogStatus06;
+                            ShowOrder();
+                            SendMailing(email);
                         }
-
-                        Person.CreateNewPerson(People, name, email, mailing);
-                        SendSystemMsg(Constants.DialogMsg18);
-                        SendSystemMsg(Constants.DialogMsg19);
-                        DialogStatus = Constants.DialogStatus06;
-                        ShowOrder();
-                        SendMailing(email);
                         break;
                     default:
                         break;
@@ -364,7 +395,7 @@ namespace PizzaChat
                 //TODO: + в else - в лого , что введеного id пиццы не существует
             }
 
-            if (arr[1].ToLower() != "да" || arr[1].ToLower() != "нет")
+            if (arr[1].ToLower() != "да" && arr[1].ToLower() != "нет")
             {
                 return total;
                 //TODO: + в else - в лого , что огласине\не согласие на двойной сыр не введено
@@ -382,6 +413,96 @@ namespace PizzaChat
 
             return total;
         }
+
+        private bool InputCheckAdmin(string msg)
+        {
+            bool total = false;
+            int Icount;
+            byte Iid;
+
+            switch (DialogStatus)
+            {
+                case Constants.DialogStatusAdmin04:
+                    if (!byte.TryParse(fldMsgBox.Text, out Iid))
+                    {
+                        return total;
+                        //TODO:логер, что не так введен админом id для удаления
+                    }
+
+                    Iid = Convert.ToByte(msg);
+
+                    if (ClassLibrary.Menu.GetPizza(MenuPizza, Convert.ToByte(fldMsgBox.Text)) == false)
+                    {
+                        return total;
+                        //TODO:логер, что введен админом id для удаления нету в меню
+                    }
+                    break;
+                case Constants.DialogStatusAdmin02:
+                    string[] arr = msg.Split(new char[] { ';' });
+
+                    if (arr.Length != 3)
+                    {
+                        return total;
+                        //TODO: + в else - в лого , что введено не верное количество значений
+                    }
+
+                    if (!int.TryParse(arr[2], out Icount))
+                    {
+                        return total;
+                        //TODO: + в else - в лого , что цена пиццы введен в невеном формате
+                    }
+
+                    if (Convert.ToInt32(arr[2]) < 1)
+                    {
+                        return total;
+                        //TODO: + в else - в лого , цена введена в неверном формате
+                    }
+                    break;
+                case Constants.DialogStatusAdmin03:
+                    string[] arr03 = msg.Split(new char[] { ';' });
+
+                    if (arr03.Length != 4)
+                    {
+                        return total;
+                        //TODO: + в else - в лого , что введено не верное количество значений
+                    }
+
+                    if (!byte.TryParse(arr03[0], out Iid))
+                    {
+                        return total;
+                        //TODO: + в else - в лого , что номер пиццы введен в невеном формате
+                    }
+
+                    Iid = Convert.ToByte(arr03[0]);
+
+                    if (ClassLibrary.Menu.GetPizza(MenuPizza, Iid) == false)
+                    {
+                        return total;
+                        //TODO:логер, что введен админом id для измнения нету в меню
+                    }
+
+                    if (!int.TryParse(arr03[3], out Icount))
+                    {
+                        return total;
+                        //TODO: + в else - в лого , что цена пиццы введен в невеном формате
+                    }
+
+                    if (Convert.ToInt32(arr03[3]) < 1)
+                    {
+                        return total;
+                        //TODO: + в else - в лого , цена введена в неверном формате
+                    }
+                    break;
+                default:
+                    //TODO:в лого, что при поверке на ошибки в части админки что-то пошло не так
+                    break;
+            }
+            
+            total = true;
+
+            return total;
+        }
+
 
         private void FldMsgBox_TextChanged(object sender, EventArgs e)
         {
