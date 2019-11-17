@@ -42,6 +42,7 @@ namespace ClassLibrary
         public const string DialogMsg22 = "Заказ скомплектован.";
         public const string DialogMsg23 = "Заказ доставлен курьером.";
         public const string DialogMsg24 = " (C учетом скидки.)";
+        public const string DialogMsg25 = "Ответ введен не верно. Попробуйте еще раз.";
         public const int AmountAdminVariants = 4;
         public const string DialogStatus01 = "start";
         public const string DialogStatus02 = "menu";

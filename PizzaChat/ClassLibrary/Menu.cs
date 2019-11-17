@@ -29,6 +29,16 @@ namespace ClassLibrary
             }
             return menu;
         }
+        public static bool GetPizza (Dictionary<byte, ClassLibrary.Menu> MenuPizza, byte id)
+        {
+            bool total = false;
+
+            foreach (KeyValuePair<byte, Menu> keyValue in MenuPizza)
+            {
+                if (keyValue.Key == id) { total = true};
+            }
+             return total;
+        }
 
         public static void CreatePizza(Dictionary<byte, ClassLibrary.Menu> MenuPizza, string pizzaInfo)
         {
