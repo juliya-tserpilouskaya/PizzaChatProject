@@ -219,6 +219,7 @@ namespace PizzaChat
                         else
                         {
                             SendSystemMsg(Constants.DialogMsg25);
+                            //logger note
                         }
                         break;
                     case Constants.DialogStatus04:
@@ -235,7 +236,7 @@ namespace PizzaChat
                         }
                         break;
                     case Constants.DialogStatus05:
-                        if (fldMsgBox.Text.ToLower() != "да" && fldMsgBox.Text.ToLower() != "нет")
+                        if (fldMsgBox.Text.ToLower() != "да" || fldMsgBox.Text.ToLower() != "нет")
                         {
                             switch (fldMsgBox.Text.ToLower())
                             {
@@ -256,6 +257,11 @@ namespace PizzaChat
                             ShowOrder();
                             SendMailing(email);
                         }
+                        else
+                        {
+                            SendSystemMsg(Constants.DialogMsg25);
+                            //logger note
+                        }
                         break;
                     default:
                         break;
@@ -273,17 +279,17 @@ namespace PizzaChat
         {
             SendSystemMsg(Constants.DialogMsg21);
             logger.UseLogger("INFO", Constants.DialogMsg21, Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
-            Email.EmailOrderPayment(email, billInfo);
+            Email.EmailOrderPayment(email, billInfo, logger);
             PauseMaker(pauseTime_ms);
 
             SendSystemMsg(Constants.DialogMsg22);
             logger.UseLogger("INFO", Constants.DialogMsg22, Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
-            Email.EmailOrderComplited(email, billInfo);
+            Email.EmailOrderComplited(email, billInfo, logger);
             PauseMaker(pauseTime_ms);
 
             SendSystemMsg(Constants.DialogMsg23);
             logger.UseLogger("INFO", Constants.DialogMsg23, Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
-            Email.EmailOrderDeliveredByCourier(email, billInfo);
+            Email.EmailOrderDeliveredByCourier(email, billInfo, logger);
         }
         bool IsValidEmail(string email)
         {
