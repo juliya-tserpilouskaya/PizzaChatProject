@@ -40,7 +40,7 @@ namespace ClassLibrary
         public static byte SearchPerson(Dictionary<byte, ClassLibrary.Person> People, string name)
         {
             byte id = 0;
-            for (byte i = 1; i < People.Count; i++)
+            for (byte i = 1; i <= People.Count; i++)
             {
                 if (People[i]._name == name) id=i;
             }
