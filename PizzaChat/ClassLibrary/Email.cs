@@ -42,7 +42,7 @@ namespace ClassLibrary
             try
             {
                 smtp.Send(email);
-                logger.UseLogger("INFO", "Письмо успешно доставлено", Thread.GetDomainID().ToString(), "SendMail");
+                logger.UseLogger("INFO", "Email successfully delivered.", Thread.GetDomainID().ToString(), "SendMail");
             }
             catch (SmtpFailedRecipientsException ex)
             {

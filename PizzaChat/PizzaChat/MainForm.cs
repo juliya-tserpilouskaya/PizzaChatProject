@@ -77,7 +77,7 @@ namespace PizzaChat
                         {
                             DialogStatus = Constants.DialogStatusAdmin01;
                             SendSystemMsg(Constants.DialogMsg04);
-                            logger.UseLogger("INFO", "Admin administrates...", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
+                            logger.UseLogger("INFO", "Admin start administrate...", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                         }
                         else
                         {
@@ -170,6 +170,7 @@ namespace PizzaChat
                         else
                         {
                             SendSystemMsg(Constants.DialogMsg25);
+                            logger.UseLogger("WARN", "The answer was entered incorrectly.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                         }
                         break;
                     case Constants.DialogStatus02:
@@ -183,6 +184,7 @@ namespace PizzaChat
                         else
                         {
                             SendSystemMsg(Constants.DialogMsg25);
+                            logger.UseLogger("WARN", "The answer was entered incorrectly.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                         }                    
                         break;
                     case Constants.DialogStatus03:
@@ -202,13 +204,13 @@ namespace PizzaChat
                                 else
                                 {
                                     DialogStatus = Constants.DialogStatus06;
-                                    logger.UseLogger("INFO", "Search email in the database.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                                     fldMsgBox.Text = String.Empty;
                                     btSendMsg.Enabled = false;
                                     fldMsgBox.Enabled = false;
                                     SendSystemMsg(Constants.DialogMsg19);
                                     ShowOrder();
                                     email = Person.SearchPersonEmail(People, id);
+                                    logger.UseLogger("INFO", "Search email in the database.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                                     SendMailing(email);
                                 }
                             }
@@ -222,7 +224,7 @@ namespace PizzaChat
                         else
                         {
                             SendSystemMsg(Constants.DialogMsg25);
-                            //logger note
+                            logger.UseLogger("WARN", "The answer was entered incorrectly.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                         }
                         break;
                     case Constants.DialogStatus04:
@@ -230,6 +232,7 @@ namespace PizzaChat
                         if (correctEmail == false)
                         {
                             SendSystemMsg(Constants.DialogMsg16);
+                            logger.UseLogger("WARN", "E-mail was entered incorrectly.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                         }
                         else
                         {
@@ -245,9 +248,11 @@ namespace PizzaChat
                             {
                                 case "нет":
                                     mailing = false;
+                                    logger.UseLogger("INFO", $"The user with the email {email} unsubscribed from the newsletter.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                                     break;
                                 case "да":
                                     mailing = true;
+                                    logger.UseLogger("INFO", $"The user with the email {email} subscribed to the newsletter.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                                     break;
                                 default:
                                     break;
@@ -257,6 +262,7 @@ namespace PizzaChat
                             btSendMsg.Enabled = false;
                             Person.CreateNewPerson(People, name, email, mailing);
                             SendSystemMsg(Constants.DialogMsg18);
+                            logger.UseLogger("INFO", "User record created", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                             SendSystemMsg(Constants.DialogMsg19);
                             DialogStatus = Constants.DialogStatus06;
                             ShowOrder();
@@ -265,11 +271,12 @@ namespace PizzaChat
                         else
                         {
                             SendSystemMsg(Constants.DialogMsg25);
-                            //logger note
+                            logger.UseLogger("WARN", "E-mail was entered incorrectly.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                         }
                         break;
                     case Constants.DialogStatus06:
                         SendSystemMsg(Constants.DialogMsg26);
+                        logger.UseLogger("INFO", "Order completed.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                         break;
                     default:
                         break;
@@ -278,7 +285,7 @@ namespace PizzaChat
             else
             {
                 SendSystemMsg(Constants.DialogMsg25);
-                //TODO: в логер. что пользователь ввел в чат пустое сообщение
+                logger.UseLogger("WARN", "User entered an empty string.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
             }
             fldMsgBox.Text = String.Empty;
         }
@@ -303,7 +310,6 @@ namespace PizzaChat
         {
             try
             {
-                //усилить проверку, так как в отправке словила эксепшн
                 var addr = new System.Net.Mail.MailAddress(email);
                 logger.UseLogger("ERROR", "Valid email entered.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                 return addr.Address == email;
@@ -330,7 +336,7 @@ namespace PizzaChat
             }
                 
             SendSystemMsg(Constants.DialogMsg20 + sumOrder);
-            logger.UseLogger("INFO", "Order display.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
+            logger.UseLogger("INFO", "Order displayed. Contains:" + billInfo + "Cost:" + sumOrder.ToString(), Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
         }
 
         public void ShowMenu()
@@ -343,7 +349,7 @@ namespace PizzaChat
                 arrMenu[i] = arrMenu[i].Replace(";", "\n");
                 SendSystemMsg(arrMenu[i]);
             }
-            logger.UseLogger("INFO", "Show menu.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
+            logger.UseLogger("INFO", "The menu was shown on the screen.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
         }
 
         public string DialogBox
@@ -366,8 +372,6 @@ namespace PizzaChat
             return sf.GetMethod().Name;
         }
 
-        //public event EventHandler SendMsg;
-
         private void PauseMaker(int value)
         {
             Stopwatch sw = new Stopwatch();
@@ -385,46 +389,71 @@ namespace PizzaChat
 
             if (arr.Length!=3) 
             {
+                logger.UseLogger("INFO", "Valid number of values entered.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                 return total;
-                //TODO: + в else - в лого , что введено не верное количество значений
             }
+            else 
+            {
+                logger.UseLogger("WARN", "Incorrect number of values entered.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
+            }
+            
 
             if (!byte.TryParse(arr[0], out Iid))
             {
+                logger.UseLogger("INFO", "The pizza number entered in the correct format.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                 return total;
-                //TODO: + в else - в лого , что номер пиццы введен в невеном формате
+            }
+            else
+            {
+                logger.UseLogger("WARN", "The pizza number entered in the wrong format.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
             }
 
             if (!int.TryParse(arr[2], out Icount))
             {
+                logger.UseLogger("INFO", "The number of pizzas entered in the correct format.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                 return total;
-                //TODO: + в else - в лого , что кол-во пиццы введен в невеном формате
+            }
+            else
+            {
+                logger.UseLogger("WARN", "The number of pizzas entered in the wrong format.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
             }
 
             Iid = Convert.ToByte(arr[0]);
 
             if (!ClassLibrary.Menu.GetPizza(MenuPizza, Iid))
             {
+                logger.UseLogger("INFO", "Pizza ID entered correctly.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                 return total;
-                //TODO: + в else - в лого , что введеного id пиццы не существует
+            }
+            else
+            {
+                logger.UseLogger("WARN", "The entered pizza ID does not exist.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
             }
 
             if (arr[1].ToLower() != "да" && arr[1].ToLower() != "нет")
             {
+                logger.UseLogger("INFO", "The answer to the request for double cheese is entered correctly.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                 return total;
-                //TODO: + в else - в лого , что огласине\не согласие на двойной сыр не введено
+            }
+            else
+            {
+                logger.UseLogger("WARN", "The response to the double cheese request is incorrect.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
             }
 
             Icount = Convert.ToInt32(arr[2]);
 
             if (Icount < 1)
             {
+                logger.UseLogger("INFO", "The number of pizzas entered is correct.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                 return total;
-                //TODO: + в else - в лого , что не верно введено количество пицц
+            }
+            else
+            {
+                logger.UseLogger("WARN", "The number of pizzas entered is incorrect.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
             }
 
-            total = true; 
-
+            total = true;
+            logger.UseLogger("INFO", "All information on the iteration of the order is entered correctly.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
             return total;
         }
 
@@ -439,16 +468,24 @@ namespace PizzaChat
                 case Constants.DialogStatusAdmin04:
                     if (!byte.TryParse(fldMsgBox.Text, out Iid))
                     {
+                        logger.UseLogger("DEBUG", "The administrator entered the id of the pizza to delete in the correct format.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                         return total;
-                        //TODO:логер, что не так введен админом id для удаления
+                    }
+                    else
+                    {
+                        logger.UseLogger("DEBUG", "The administrator entered the pizza id to delete in the wrong format.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                     }
 
                     Iid = Convert.ToByte(msg);
 
                     if (ClassLibrary.Menu.GetPizza(MenuPizza, Convert.ToByte(fldMsgBox.Text)) == false)
                     {
+                        logger.UseLogger("DEBUG", "The administrator correctly entered the id pizza to delete.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                         return total;
-                        //TODO:логер, что введен админом id для удаления нету в меню
+                    }
+                    else
+                    {
+                        logger.UseLogger("DEBUG", "The administrator incorrectly entered the id of the pizza to delete.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                     }
                     break;
                 case Constants.DialogStatusAdmin02:
@@ -456,20 +493,32 @@ namespace PizzaChat
 
                     if (arr.Length != 3)
                     {
+                        logger.UseLogger("DEBUG", "The administrator entered the correct number of values.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                         return total;
-                        //TODO: + в else - в лого , что введено не верное количество значений
+                    }
+                    else
+                    {
+                        logger.UseLogger("DEBUG", "The administrator entered the wrong number of values.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                     }
 
                     if (!int.TryParse(arr[2], out Icount))
                     {
+                        logger.UseLogger("DEBUG", "The pizza price is entered in the correct format.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                         return total;
-                        //TODO: + в else - в лого , что цена пиццы введен в невеном формате
+                    }
+                    else
+                    {
+                        logger.UseLogger("DEBUG", "Pizza price is entered in the wrong format.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                     }
 
                     if (Convert.ToInt32(arr[2]) < 1)
                     {
+                        logger.UseLogger("DEBUG", "The pizza price is entered in the correct format.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                         return total;
-                        //TODO: + в else - в лого , цена введена в неверном формате
+                    }
+                    else
+                    {
+                        logger.UseLogger("DEBUG", "Pizza price is entered in the wrong format.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                     }
                     break;
                 case Constants.DialogStatusAdmin03:
@@ -477,46 +526,65 @@ namespace PizzaChat
 
                     if (arr03.Length != 4)
                     {
+                        logger.UseLogger("DEBUG", "The administrator entered the correct number of values.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                         return total;
-                        //TODO: + в else - в лого , что введено не верное количество значений
+                    }
+                    else
+                    {
+                        logger.UseLogger("DEBUG", "The administrator entered the wrong number of values.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                     }
 
                     if (!byte.TryParse(arr03[0], out Iid))
                     {
+                        logger.UseLogger("DEBUG", "The administrator entered the pizza number in the correct format.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                         return total;
-                        //TODO: + в else - в лого , что номер пиццы введен в невеном формате
+                    }
+                    else
+                    {
+                        logger.UseLogger("DEBUG", "The administrator entered the pizza number in the wrong format.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                     }
 
                     Iid = Convert.ToByte(arr03[0]);
 
                     if (ClassLibrary.Menu.GetPizza(MenuPizza, Iid) == false)
                     {
+                        logger.UseLogger("DEBUG", "The administrator correctly entered the id pizza to change.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                         return total;
-                        //TODO:логер, что введен админом id для измнения нету в меню
+                    }
+                    else
+                    {
+                        logger.UseLogger("DEBUG", "The administrator incorrectly entered the id of the pizza to change.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                     }
 
                     if (!int.TryParse(arr03[3], out Icount))
                     {
+                        logger.UseLogger("DEBUG", "The pizza price is entered in the correct format.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                         return total;
-                        //TODO: + в else - в лого , что цена пиццы введен в невеном формате
+                    }
+                    else
+                    {
+                        logger.UseLogger("DEBUG", "Pizza price is entered in the wrong format.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                     }
 
                     if (Convert.ToInt32(arr03[3]) < 1)
                     {
+                        logger.UseLogger("DEBUG", "The pizza price is entered in the correct format.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                         return total;
-                        //TODO: + в else - в лого , цена введена в неверном формате
+                    }
+                    else
+                    {
+                        logger.UseLogger("DEBUG", "Pizza price is entered in the wrong format.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                     }
                     break;
                 default:
-                    //TODO:в лого, что при поверке на ошибки в части админки что-то пошло не так
+                    logger.UseLogger("ERROR", "Programmers call the administrator to testify how he managed to get into this part of the code.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
                     break;
             }
             
             total = true;
-
+            logger.UseLogger("DEBUG", "All information on the iteration of the order is entered correctly.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
             return total;
         }
-
 
         private void FldMsgBox_TextChanged(object sender, EventArgs e)
         {

@@ -23,7 +23,7 @@ namespace ClassLibrary
         public const string DialogMsg03 = "Г-н администратор, введите номер неободимой команды :";
         public const string DialogMsg04 = DialogMsg03 + "1 - внести в меню новую пиццу; 2 - изменить пиццу; 3 - удалить пиццу из меню; 4 - вывести все меню.";
         public const string DialogMsg05 = "Ошибка выбора варианта ответа.";
-        public const string DialogMsg06 = "Администратор ввел неверную команду.";
+        public const string DialogMsg06 = "Admin entered an invalid command.";
         public const string DialogMsg07 = "Введине данные о новой пицце согласно шаблону: *название*;*соста*;*цена*";
         public const string DialogMsg08 = "Новая пицца занесена в меню.";
         public const string DialogMsg09 = "Для удаления пиццы введите ее номер";
@@ -42,7 +42,7 @@ namespace ClassLibrary
         public const string DialogMsg22 = "Заказ скомплектован.";
         public const string DialogMsg23 = "Заказ доставлен курьером.";
         public const string DialogMsg24 = " (C учетом скидки.)";
-        public const string DialogMsg25 = "Ответ введен не верно. Попробуйте еще раз.";
+        public const string DialogMsg25 = "Ответ введен неверно. Попробуйте еще раз.";
         public const string DialogMsg26 = "Благодарим, что воспользовались нашими услугами! Будем ждать вас снова.";
         public const int AmountAdminVariants = 4;
         public const string DialogStatus01 = "start";

@@ -9,6 +9,13 @@ namespace Logger
 {
     public class CustomLogger
     {
+        /// <summary>
+        /// Writes logs to a text file.
+        /// </summary>
+        /// <param name="target">Enter INFO/DEBUG/WARN/ERROR</param>
+        /// <param name="messaage">Enter your message</param>
+        /// <param name="thread">Enter the thread number</param>
+        /// <param name="codePlace">Enter the place in code</param>
         public void UseLogger(string target, string messaage, string thread, string codePlace)
         {
             string writePath = InitMyLogger();
@@ -19,6 +26,10 @@ namespace Logger
                     LogWrite(messaage, writePath);
                     break;
                 case "DEBUG":
+                    messaage = $"{DateTime.Now:hh:mm:ss yyyy.MM.dd} {target} At {codePlace}. {messaage} Thread: {thread}.";
+                    LogWrite(messaage, writePath);
+                    break;
+                case "WARN":
                     messaage = $"{DateTime.Now:hh:mm:ss yyyy.MM.dd} {target} At {codePlace}. {messaage} Thread: {thread}.";
                     LogWrite(messaage, writePath);
                     break;
@@ -83,6 +94,7 @@ namespace Logger
                 Console.WriteLine(e.Message);
             }
         }
+
         static void Main()
         {
         }
