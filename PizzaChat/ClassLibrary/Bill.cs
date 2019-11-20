@@ -27,7 +27,7 @@ namespace ClassLibrary
                 if (keyValue.Value._doubleCheese == true){ cheese = "да"; }
                 else { cheese = "нет"; }
                 if (order != String.Empty) order += "|";
-                order += $"№:{keyValue.Key}; название:{keyValue.Value._name}; двойной сыр: {cheese}; цена: {keyValue.Value._cost}; количество: {keyValue.Value._amount}";
+                order += $"№ пиццы:{keyValue.Key}; название:{keyValue.Value._name}; двойной сыр: {cheese}; цена: {keyValue.Value._cost}; количество: {keyValue.Value._amount}. ";
             }
             return order;
         }
