@@ -31,7 +31,7 @@ namespace Logger
             }
         }
 
-        public string InitMyLogger()
+        private string InitMyLogger()
         {
             string LogDir = Path.Combine(Environment.CurrentDirectory, @"..\..\..\" + @"\Log");
             if (!Directory.Exists(LogDir))
@@ -69,7 +69,7 @@ namespace Logger
             return writePath;
         }
 
-        public async void LogWrite(string text, string writePath)
+        private async void LogWrite(string text, string writePath)
         {
             try
             {

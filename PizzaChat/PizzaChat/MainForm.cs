@@ -203,6 +203,9 @@ namespace PizzaChat
                                 {
                                     DialogStatus = Constants.DialogStatus06;
                                     logger.UseLogger("INFO", "Search email in the database.", Thread.GetDomainID().ToString(), GetCurrentMethod().ToString());
+                                    fldMsgBox.Text = String.Empty;
+                                    btSendMsg.Enabled = false;
+                                    fldMsgBox.Enabled = false;
                                     SendSystemMsg(Constants.DialogMsg19);
                                     ShowOrder();
                                     email = Person.SearchPersonEmail(People, id);
@@ -250,6 +253,8 @@ namespace PizzaChat
                                     break;
                             }
                             fldMsgBox.Text = String.Empty;
+                            fldMsgBox.Enabled = false;
+                            btSendMsg.Enabled = false;
                             Person.CreateNewPerson(People, name, email, mailing);
                             SendSystemMsg(Constants.DialogMsg18);
                             SendSystemMsg(Constants.DialogMsg19);
@@ -262,6 +267,9 @@ namespace PizzaChat
                             SendSystemMsg(Constants.DialogMsg25);
                             //logger note
                         }
+                        break;
+                    case Constants.DialogStatus06:
+                        SendSystemMsg(Constants.DialogMsg26);
                         break;
                     default:
                         break;
