@@ -58,7 +58,7 @@ namespace ClassLibrary
         public static void CreateDictionary(Dictionary<byte, Person> People, Dictionary<byte, Menu> MenuPizza)
         {
             People.Add(1, new Person("Ludmila", "ludmila.sav.96@gmail.com", true));
-            People.Add(2, new Person("Julia", "juliet_ai@mail.ru", true));
+            People.Add(2, new Person("Юлия", "juliet_ai@mail.ru", true));
 
             MenuPizza.Add(1, new Menu("Пепперони и болгарский перец", "пицца-соус, пепперони, свежий болгарский перец, сыр моцарелла, базилик", 17));
             MenuPizza.Add(2, new Menu("Кантри четыре сезона", "грибной соус, буженина (свинина), грудинка (свинина), маринованные опята, сыр фета, сыр дорблю, сыр моцарелла, базилик", 22));

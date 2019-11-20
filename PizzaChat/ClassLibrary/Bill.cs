@@ -40,6 +40,7 @@ namespace ClassLibrary
             string pizzaStructure = MenuPizza[Convert.ToByte(arrOrder[0])]._structure;
             int pizzaCost = MenuPizza[Convert.ToByte(arrOrder[0])]._cost;
             bool pizzaCheese=false;
+            byte id;
 
             switch (arrOrder[1].ToLower())
             {
@@ -52,8 +53,6 @@ namespace ClassLibrary
                 default:
                     break;
             }
-
-            byte id;
 
             if (Order.Count == 0)
             {
@@ -79,6 +78,5 @@ namespace ClassLibrary
             if (DateTime.Now.DayOfWeek == DayOfWeek.Tuesday) sum *= 1-Constants.TuesdaySale;
             return sum;
         }
-
     }
 }

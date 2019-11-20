@@ -186,7 +186,7 @@ namespace PizzaChat
                         }                    
                         break;
                     case Constants.DialogStatus03:
-                        if (fldMsgBox.Text.ToLower() != "нет" && fldMsgBox.Text.ToLower() != "да")
+                        if (fldMsgBox.Text.ToLower() != "нет" || fldMsgBox.Text.ToLower() != "да")
                         {
                             if (fldMsgBox.Text.ToLower().Contains("нет"))
                             {
